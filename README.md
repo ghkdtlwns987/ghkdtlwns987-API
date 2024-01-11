@@ -79,6 +79,11 @@
 - `CommandMemberServiceTest` -> 회원 삭제 기능, 회원 조회 기능 테스트코드 작성
 - 그 외 추가 직업
 
+(2023/01/11 - 업데이트 내용)
+- Git Repository 재생성
+- `CommandMemberController` -> 회원 탈퇴 진행 후 password, nickname가 수행되는 현상 수정
+- `ComamndMemberControllerTest` -> 테스트 코드추가 작성
+
 # 진행해야 할 내용
 - 테스트 코드 추가 작성
 - 기능 추가(update, withdraw)

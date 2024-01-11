@@ -351,6 +351,36 @@ public class CommandMemberControllerTest {
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
     }
+
+    @Test
+    @DisplayName("멤버등록실패_이미_가입된_회원")
+    void 멤버등록실패_이미_가입된_회원() throws Exception{
+        // given
+        MemberCreateRequestDto request = MemberCreateRequestDto.builder()
+                .loginId(loginId)
+                .password(password)
+                .email(email)
+                .nickname(nickname)
+                .username(userName)
+                .phone(phone)
+                .build();
+
+        when(commandMemberService.signup(any())).thenThrow(new ClientException(ErrorCode.MEMBER_NICKNAME_ALREADY_EXISTS, "MEMBER IS ALREADY EXISTS"));
+
+        //when
+        ResultActions perform = mockMvc.perform(post("/api/v1/member")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+        );
+        // then
+        perform.andDo(print()).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.errorMessage[0]", equalTo("MEMBER IS ALREADY EXISTS")))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        verify(commandMemberService, times(1)).signup(any());
+    }
+
     @Test
     @DisplayName("멤버 nickname 수정 성공 - 유효한 nickname")
     void 멤버수정성공_유효한_nickname() throws Exception{
@@ -368,13 +398,16 @@ public class CommandMemberControllerTest {
 
         // then
         perform.andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.code", equalTo("M001")))
+                .andExpect(jsonPath("$.message", equalTo("회원 NICKNAME 수정 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(member.getLoginId())))
                 .andExpect(jsonPath("$.data.password", equalTo(member.getPassword())))
-                .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
                 .andExpect(jsonPath("$.data.email", equalTo(member.getEmail())))
+                .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
                 .andExpect(jsonPath("$.data.roles", equalTo("USER")))
+                .andExpect(jsonPath("$.data.withdrawal", equalTo(member.isWithdraw())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
         verify(commandMemberService, times(1)).updateNickname(loginId, newNickname);
@@ -399,6 +432,8 @@ public class CommandMemberControllerTest {
 
         // then
         perform.andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.code", equalTo("M001")))
+                .andExpect(jsonPath("$.message", equalTo("회원 PASSWORD 수정 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(member.getLoginId())))
                 .andExpect(jsonPath("$.data.password", equalTo(member.getPassword())))
                 .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
@@ -446,9 +481,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
                 .andExpect(jsonPath("$.data.roles", equalTo("USER")))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(false))) // 추가된 부분
-                .andExpect(content().contentType(MediaType.valueOf("application/hal+json")))
-        ;
-
+                .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
         verify(commandMemberService, times(1)).signup(any());
     }
@@ -467,8 +500,8 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.code", equalTo("M001")))
-                .andExpect(jsonPath("$.message", equalTo("회원가입 되었습니다.")))
+                .andExpect(jsonPath("$.code", equalTo("M007")))
+                .andExpect(jsonPath("$.message", equalTo("회원탈퇴 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(memberWithdrawalResponseDto.getLoginId())))
                 .andExpect(jsonPath("$.data.password", equalTo(memberWithdrawalResponseDto.getPassword())))
                 .andExpect(jsonPath("$.data.email", equalTo(memberWithdrawalResponseDto.getEmail())))
@@ -476,7 +509,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.nickname", equalTo(memberWithdrawalResponseDto.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(memberWithdrawalResponseDto.getPhone())))
                 .andExpect(jsonPath("$.data.roles", equalTo("USER")))
-                .andExpect(jsonPath("$.data.withdrawal", equalTo(memberWithdrawalResponseDto.isWithdrawal()))) // 추가된 부분
+                .andExpect(jsonPath("$.data.withdrawal", equalTo(memberWithdrawalResponseDto.isWithdrawal())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
         verify(commandMemberService, times(1)).witrawalMember(any());
@@ -508,10 +541,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.roles", equalTo("USER")))
                 .andExpect(jsonPath("$.data.withdraw", equalTo(memberGetInformationResponseDto.isWithdraw())))
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
-
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
-
-
         verify(commandMemberService, times(1)).getMemberInfo(any());
     }
 }
