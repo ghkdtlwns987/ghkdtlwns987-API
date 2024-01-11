@@ -1,0 +1,28 @@
+package com.ghkdtlwns987.apiserver.Member.Exception;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+
+@Getter
+@RequiredArgsConstructor
+public enum ErrorCode {
+
+    MEMBER_ALREADY_EXISTS("M001", 400, "MEMBER IS ALREADY EXISTS"),
+    MEMBER_NOT_EXISTS("M001", 400, "MEMBER NOT EXISTS"),
+    MEMBER_EMAIL_NOT_EXISTS("M001", 400, "MEMBER EMAIL NOT EXISTS"),
+    MEMBER_ALREADY_WITHDRAW("M001", 400, "MEMBER ALREADY_WITHDRAW"),
+    MEMBER_EMAIL_ALREADY_EXISTS("M001", 400, "MEMBER EMAIL ALREADY EXISTS"),
+    MEMBER_NICKNAME_NOT_EXISTS("M001", 400, "MEMBER NICKNAME NOT EXISTS"),
+    MEMBER_NICKNAME_ALREADY_EXISTS("M001", 400, "MEMBER NICKNAME ALREADY EXISTS"),
+    MEMBER_LOGINID_NOT_EXISTS("M001", 400, "MEMBER LOGIN_ID NOT EXISTS"),
+    MEMBER_PHONE_NOT_EXISTS("M001", 400, "MEMBER_PHONE_NOT_EXISTS"),
+    INVALID_TYPE_VALUE("C004", 400, "INVALID TYPE VALUE"),
+
+    INVALID_PASSWORD_INPUT("I001", 500, "INVALID PASSWORD TYPE")
+    ;
+
+    private final String code;
+    private final int status;
+    private final String message;
+}
