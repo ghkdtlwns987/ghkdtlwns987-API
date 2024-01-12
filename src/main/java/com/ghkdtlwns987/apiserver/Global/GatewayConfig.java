@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Configuration
 public class GatewayConfig {
-    @Value("${api.member.url}")
-    public String memberUrl;
-
     @Value("${auth.authentication.url}")
     public String authenticationUrl;
 
