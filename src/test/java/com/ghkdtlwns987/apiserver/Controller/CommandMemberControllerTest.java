@@ -406,7 +406,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(member.isWithdraw())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
@@ -440,7 +440,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.email", equalTo(member.getEmail())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
         verify(commandMemberService, times(1)).updatePassword(loginId, correctPassword);
@@ -479,7 +479,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(false))) // 추가된 부분
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
@@ -508,7 +508,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(memberWithdrawalResponseDto.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(memberWithdrawalResponseDto.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(memberWithdrawalResponseDto.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(memberWithdrawalResponseDto.isWithdrawal())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
@@ -538,7 +538,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(memberGetInformationResponseDto.getUsername())))
                 .andExpect(jsonPath("$.data.userId", equalTo(memberGetInformationResponseDto.getUserId())))
                 .andExpect(jsonPath("$.data.phone", equalTo(memberGetInformationResponseDto.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
                 .andExpect(jsonPath("$.data.withdraw", equalTo(memberGetInformationResponseDto.isWithdraw())))
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));

@@ -20,7 +20,7 @@ public class MemberUpdatePasswordResponseDto {
     private String username;
     private String nickname;
     private String phone;
-    private Roles roles;
+    private String roles;
     private boolean withdrawal;
 
     public static MemberUpdatePasswordResponseDto fromEntity(Member member){
@@ -31,7 +31,7 @@ public class MemberUpdatePasswordResponseDto {
                 member.getUsername(),
                 member.getNickname(),
                 member.getPhone(),
-                member.getRoles(),
+                member.getRoles().getId(),
                 member.isWithdraw()
         );
     }

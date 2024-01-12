@@ -18,7 +18,7 @@ public class MemberGetInformationResponseDto {
     private String username;
     private String userId;
     private String phone;
-    private Roles roles;
+    private String roles;
     private boolean withdraw;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
@@ -33,7 +33,7 @@ public class MemberGetInformationResponseDto {
                 member.getUsername(),
                 member.getUserId(),
                 member.getPhone(),
-                member.getRoles(),
+                member.getRoles().getId(),
                 member.isWithdraw(),
                 member.getCreateAt(),
                 member.getUpdateAt()

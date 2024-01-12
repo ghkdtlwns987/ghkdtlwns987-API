@@ -3,15 +3,13 @@ package com.ghkdtlwns987.apiserver.Member.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public enum Roles {
-    USER("USER"),
-    MANAGER("MANAGER"),
-    ADMIN("ADMIN"),
-    ;
-
-    private String role;
+    USER("ROLE_USER", "유저"),
+    ADMIN("ROLE_ADMIN", "관리자");
+    private final String id;
+    private final String name;
 }

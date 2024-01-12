@@ -206,7 +206,7 @@ public class CommandMemberServiceTest {
         assertThat(result.getUsername()).isEqualTo(userName);
         assertThat(result.getNickname()).isEqualTo(nickname);
         assertThat(result.getPhone()).isEqualTo(phone);
-        assertThat(result.getRoles()).isEqualTo(roles);
+        assertThat(result.getRoles()).isEqualTo(roles.getId());
 
         verify(commandMemberRepository, times(1)).save(any());
     }
