@@ -84,6 +84,13 @@
 - `CommandMemberController` -> 회원 탈퇴 진행 후 password, nickname가 수행되는 현상 수정
 - `ComamndMemberControllerTest` -> 테스트 코드추가 작성
 
+(2023/01/12)
+- Roles에서 `ROLE_USER` 로 출력되게끔 수정
+- Test코드 수정
+
+(2023/01/13) 
+- 로그인 기능 추가(API <-> Auth)(예정)
+- 우선 회원 쿠폰 기능 구현(예정)
 # 진행해야 할 내용
 - 테스트 코드 추가 작성
 - 기능 추가(update, withdraw)
