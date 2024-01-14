@@ -119,7 +119,7 @@ Q3. `@SpringBootTest`를 한번만 띄우는 방법은?
 A3. `IntegrationTest.java` 생성 후 `@SpringBootTest` 붙여 `extends` 하도록 함으로 써 context가 한번만 실행되게 함. 
 
 Q4. `제약조건 위반으로 인해 save() 호출이 이루어졌지만, 데이터는 저장되지 않았다. 제약조건을 만족한 상태로 값을 넣어 save()하게 된다고 했을 때 @Id는 1에서 2로 증가했을끼?`
-A4. 그렇지 않다. 트랜잭션이 한번 커밋했기 때문에 Id가 증가한 것이다.
+A4. 그렇지 않다. 트랜잭션이 한번 커밋했기 때문에 Id가 증가한 것이다.(Checked Exception -> Commit, Runtime Exception -> Roll Back)
 # 프로젝트 개발 절차
 - 테스트코드 작성 -> 실제 코드 구현 -> 검증 테스트 -> 코드 리팩토링
 
