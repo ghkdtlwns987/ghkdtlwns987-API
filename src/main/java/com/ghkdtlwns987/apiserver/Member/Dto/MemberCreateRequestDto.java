@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.Collections;
 import java.util.UUID;
 
 
@@ -53,7 +54,7 @@ public class MemberCreateRequestDto {
                 .username(username)
                 .phone(phone)
                 .userId(UUID.randomUUID().toString())
-                .roles(Roles.USER)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .build();
     }
 }

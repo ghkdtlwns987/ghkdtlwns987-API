@@ -36,4 +36,11 @@ public interface QueryMemberService {
      * @return boolean
      */
     boolean memberExistsByNickname(String nickname);
+
+    /**
+     * phone으로 회원이 존재하는지 검색하는 기능힙니다.
+     * @param phone
+     * @return
+     */
+    boolean memberExistsByPhone(String phone);
 }

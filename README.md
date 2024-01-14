@@ -91,6 +91,15 @@
 (2023/01/13) 
 - 로그인 기능 추가(API <-> Auth)(예정)
 - 우선 회원 쿠폰 기능 구현(예정)
+
+
+(2023/01/14)
+- 로그인 기능 추가 완료(API <-> Auth 서버간 통신)
+  - 로그인 성공 시 `JWT Token` 을 발급함.
+  - MemberEntity의 Roles를 `@ElementCollection(fetch = FetchType.LAZY)` 형태로 수정(1:N)(멤버(1)와 권한(N))
+  - 현재 권한은 `ROLE_USER`, `ROLE_ADMIN`이 있음.
+- Entity 수정으로 인한 테스트코드 수정
+
 # 진행해야 할 내용
 - 테스트 코드 추가 작성
 - 기능 추가(update, withdraw)
@@ -108,6 +117,9 @@ A2.
 
 Q3. `@SpringBootTest`를 한번만 띄우는 방법은?
 A3. `IntegrationTest.java` 생성 후 `@SpringBootTest` 붙여 `extends` 하도록 함으로 써 context가 한번만 실행되게 함. 
+
+Q4. `제약조건 위반으로 인해 save() 호출이 이루어졌지만, 데이터는 저장되지 않았다. 제약조건을 만족한 상태로 값을 넣어 save()하게 된다고 했을 때 @Id는 1에서 2로 증가했을끼?`
+A4. 그렇지 않다. 트랜잭션이 한번 커밋했기 때문에 Id가 증가한 것이다.
 # 프로젝트 개발 절차
 - 테스트코드 작성 -> 실제 코드 구현 -> 검증 테스트 -> 코드 리팩토링
 

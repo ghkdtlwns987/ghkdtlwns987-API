@@ -22,6 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -39,8 +41,6 @@ public class CommandMemberServiceTest {
     private final String userName = "황시준";
     private final String userId = "testUserId";
     private final String phone = "01048482771";
-    private final Roles roles = Roles.USER;
-    private boolean withdrawal = false;
     private final String newPassword = "newPassword@1234";
     private final String newNickanme = "newNickname432";
     private CommandMemberRepository commandMemberRepository;
@@ -65,7 +65,7 @@ public class CommandMemberServiceTest {
                 .username(userName)
                 .userId(userId)
                 .phone(phone)
-                .roles(roles)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .build();
 
         memberCreateRequestDto = MemberCreateRequestDto
@@ -200,13 +200,13 @@ public class CommandMemberServiceTest {
         MemberCreateResponseDto result = commandMemberService.signup(memberCreateRequestDto);
 
         // then
-        assertThat(result.getLoginId()).isEqualTo(loginId);
-        assertThat(result.getPassword()).isEqualTo(passwordEncoder.encode(password));
-        assertThat(result.getEmail()).isEqualTo(email);
-        assertThat(result.getUsername()).isEqualTo(userName);
-        assertThat(result.getNickname()).isEqualTo(nickname);
-        assertThat(result.getPhone()).isEqualTo(phone);
-        assertThat(result.getRoles()).isEqualTo(roles.getId());
+        assertThat(result.getLoginId()).isEqualTo(memberCreateRequestDto.getLoginId());
+        assertThat(result.getPassword()).isEqualTo(passwordEncoder.encode(memberCreateRequestDto.getPassword()));
+        assertThat(result.getEmail()).isEqualTo(memberCreateRequestDto.getEmail());
+        assertThat(result.getUsername()).isEqualTo(memberCreateRequestDto.getUsername());
+        assertThat(result.getNickname()).isEqualTo(memberCreateRequestDto.getNickname());
+        assertThat(result.getPhone()).isEqualTo(memberCreateRequestDto.getPhone());
+        assertThat(result.getRoles()).isEqualTo(member.getRoles());
 
         verify(commandMemberRepository, times(1)).save(any());
     }
@@ -219,7 +219,7 @@ public class CommandMemberServiceTest {
                 .nickname(memberCreateRequestDto.getNickname())
                 .phone(memberCreateRequestDto.getPhone())
                 .username(memberCreateRequestDto.getUsername())
-                .roles(Roles.USER)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .build();
     }
 }

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,7 +19,7 @@ public class MemberWithdrawalResponseDto {
     private String username;
     private String nickname;
     private String phone;
-    private String roles;
+    private List<String> roles;
     private boolean withdrawal;
 
     public static MemberWithdrawalResponseDto fromEntity(Member member){
@@ -28,7 +30,7 @@ public class MemberWithdrawalResponseDto {
                 member.getUsername(),
                 member.getNickname(),
                 member.getPhone(),
-                member.getRoles().getId(),
+                member.getRoles(),
                 member.isWithdraw()
         );
     }

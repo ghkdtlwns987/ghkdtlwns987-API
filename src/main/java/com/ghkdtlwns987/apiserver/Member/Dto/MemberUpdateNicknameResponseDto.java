@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Nickname 변경 후 응답할 데이터를 담은 Dto입니다.
  */
@@ -20,7 +22,7 @@ public class MemberUpdateNicknameResponseDto {
     private String username;
     private String nickname;
     private String phone;
-    private String roles;
+    private List<String> roles;
     private boolean withdrawal;
 
     public static MemberUpdateNicknameResponseDto fromEntity(Member member){
@@ -31,7 +33,7 @@ public class MemberUpdateNicknameResponseDto {
                 member.getUsername(),
                 member.getNickname(),
                 member.getPhone(),
-                member.getRoles().getId(),
+                member.getRoles(),
                 member.isWithdraw()
         );
     }

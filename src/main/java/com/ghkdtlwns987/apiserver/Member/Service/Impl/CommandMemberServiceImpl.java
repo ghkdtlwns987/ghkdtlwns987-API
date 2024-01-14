@@ -29,6 +29,7 @@ public class CommandMemberServiceImpl implements CommandMemberService {
             throw new MemberAlreadyExistsException();
         }
 
+
         memberCreateRequestDto.setPassword(passwordEncoder.encode(memberCreateRequestDto.getPassword()));
         Member member = memberCreateRequestDto.toEntity();
         if(isWithdrawd(member)){
@@ -139,6 +140,9 @@ public class CommandMemberServiceImpl implements CommandMemberService {
             return true;
         }
         if(queryMemberService.memberExistsByEmail(memberCreateRequestDto.getEmail())){
+            return true;
+        }
+        if(queryMemberService.memberExistsByPhone(memberCreateRequestDto.getPhone())){
             return true;
         }
         return false;

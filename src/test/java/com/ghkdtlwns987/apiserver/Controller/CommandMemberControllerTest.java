@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -73,10 +74,9 @@ public class CommandMemberControllerTest {
                 .password(password)
                 .nickname(nickname)
                 .loginId(loginId)
-                .roles(Roles.USER)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .phone(phone)
                 .email(email)
-                .roles(Roles.USER)
                 .build();
 
         String withDrawId = "" + 10L;
@@ -87,10 +87,9 @@ public class CommandMemberControllerTest {
                 .password("")
                 .nickname(withDrawId)
                 .loginId(loginId)
-                .roles(Roles.USER)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .phone(withDrawId)
                 .email(email)
-                .roles(Roles.USER)
                 .build();
 
 
@@ -406,7 +405,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo(member.getRoles())))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(member.isWithdraw())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
@@ -440,7 +439,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.email", equalTo(member.getEmail())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo(member.getRoles())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
         verify(commandMemberService, times(1)).updatePassword(loginId, correctPassword);
@@ -479,7 +478,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(member.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(member.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(member.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo(member.getRoles())))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(false))) // 추가된 부분
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
@@ -508,7 +507,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(memberWithdrawalResponseDto.getUsername())))
                 .andExpect(jsonPath("$.data.nickname", equalTo(memberWithdrawalResponseDto.getNickname())))
                 .andExpect(jsonPath("$.data.phone", equalTo(memberWithdrawalResponseDto.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo(member.getRoles())))
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(memberWithdrawalResponseDto.isWithdrawal())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
@@ -538,7 +537,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.username", equalTo(memberGetInformationResponseDto.getUsername())))
                 .andExpect(jsonPath("$.data.userId", equalTo(memberGetInformationResponseDto.getUserId())))
                 .andExpect(jsonPath("$.data.phone", equalTo(memberGetInformationResponseDto.getPhone())))
-                .andExpect(jsonPath("$.data.roles", equalTo("ROLE_USER")))
+                .andExpect(jsonPath("$.data.roles", equalTo(member.getRoles())))
                 .andExpect(jsonPath("$.data.withdraw", equalTo(memberGetInformationResponseDto.isWithdraw())))
                 .andExpect(jsonPath("$.data.id", equalTo(1)))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));

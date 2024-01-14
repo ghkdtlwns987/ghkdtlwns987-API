@@ -14,6 +14,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -27,7 +30,6 @@ public class CommandMemberRepositoryTest {
     private final String userName = "황시준";
     private final String userId = "testUserId";
     private final String phone = "01048482771";
-    private final Roles roles = Roles.USER;
 
     @Autowired
     private JpaMemberRepository commandMemberRepository;
@@ -43,19 +45,19 @@ public class CommandMemberRepositoryTest {
                 .username(userName)
                 .userId(userId)
                 .phone(phone)
-                .roles(roles)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .build();
 
         Member savedMember = commandMemberRepository.save(member);
 
         assertThat(savedMember.getId()).isNotNull();
-        assertThat(savedMember.getLoginId()).isEqualTo(loginId);
-        assertThat(savedMember.getPassword()).isEqualTo(password);
-        assertThat(savedMember.getEmail()).isEqualTo(email);
-        assertThat(savedMember.getNickname()).isEqualTo(nickname);
-        assertThat(savedMember.getUsername()).isEqualTo(userName);
-        assertThat(savedMember.getUserId()).isEqualTo(userId);
-        assertThat(savedMember.getPhone()).isEqualTo(phone);
-        assertThat(savedMember.getRoles()).isEqualTo(roles);
+        assertThat(savedMember.getLoginId()).isEqualTo(member.getLoginId());
+        assertThat(savedMember.getPassword()).isEqualTo(member.getPassword());
+        assertThat(savedMember.getEmail()).isEqualTo(member.getEmail());
+        assertThat(savedMember.getNickname()).isEqualTo(member.getNickname());
+        assertThat(savedMember.getUsername()).isEqualTo(member.getUsername());
+        assertThat(savedMember.getUserId()).isEqualTo(member.getUserId());
+        assertThat(savedMember.getPhone()).isEqualTo(member.getPhone());
+        assertThat(savedMember.getRoles()).isEqualTo(member.getRoles());
     }
 }

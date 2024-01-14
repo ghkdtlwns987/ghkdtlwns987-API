@@ -7,6 +7,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 
 @Getter
@@ -41,8 +45,8 @@ public class Member {
     @Column(name = "phone", unique = true, nullable = false, length = 11)
     private String phone;
 
-    @Column(name = "roles", nullable = false)
-    private Roles roles;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> roles = new ArrayList<>();
 
     @Column(name = "withdraw", nullable = false)
     private boolean withdraw;
@@ -57,7 +61,7 @@ public class Member {
 
 
     @Builder
-    public Member (Long Id, String loginId, String password, String email, String nickname, String username, String userId, String phone, Roles roles){
+    public Member (Long Id, String loginId, String password, String email, String nickname, String username, String userId, String phone, List<String> roles){
         this.Id = Id;
         this.loginId = loginId;
         this.password = password;

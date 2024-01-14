@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 회원의 암호 변경이 성공했을 때 응답하게될 Dto 입니다.
  */
@@ -20,7 +22,7 @@ public class MemberUpdatePasswordResponseDto {
     private String username;
     private String nickname;
     private String phone;
-    private String roles;
+    private List<String> roles;
     private boolean withdrawal;
 
     public static MemberUpdatePasswordResponseDto fromEntity(Member member){
@@ -31,7 +33,7 @@ public class MemberUpdatePasswordResponseDto {
                 member.getUsername(),
                 member.getNickname(),
                 member.getPhone(),
-                member.getRoles().getId(),
+                member.getRoles(),
                 member.isWithdraw()
         );
     }

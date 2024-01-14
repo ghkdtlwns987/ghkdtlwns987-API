@@ -44,10 +44,17 @@ public interface QueryMemberRepository {
     boolean existsMemberByLoginId(String loginId);
 
     /**
-     * nickname을 기반으로 회원이 이밎 존재하는지 확인하는 메서드 입니다.
+     * nickname을 기반으로 회원이 이미 존재하는지 확인하는 메서드 입니다.
      * @param nickname
      * @return boolean
      */
     boolean existsMemberByNickname(String nickname);
+
+    /**
+     * phone을 기반으로 회원이 이미 존재하는지 확인하는 메서드 입니다.
+     * @param phone
+     * @return
+     */
+    boolean existsMemberByPhone(String phone);
 
 }

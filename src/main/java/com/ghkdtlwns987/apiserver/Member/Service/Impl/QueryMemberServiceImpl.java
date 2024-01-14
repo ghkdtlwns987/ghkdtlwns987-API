@@ -51,4 +51,10 @@ public class QueryMemberServiceImpl implements QueryMemberService {
     public boolean memberExistsByNickname(String nickname) {
         return queryMemberRepository.existsMemberByNickname(nickname);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean memberExistsByPhone(String phone){
+        return queryMemberRepository.existsMemberByPhone(phone);
+    }
 }

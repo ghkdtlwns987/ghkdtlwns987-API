@@ -75,6 +75,14 @@ public class QueryDslQueryMemberRepository implements QueryMemberRepository {
         return Optional.ofNullable(jpaQueryFactory.selectFrom(member)
                 .where(member.nickname.eq(nickname))
                 .fetchFirst()).isPresent();
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsMemberByPhone(String phone){
+        QMember member = QMember.member;
+        return Optional.ofNullable(jpaQueryFactory.selectFrom(member)
+                .where(member.phone.eq(phone))
+                .fetchFirst()).isPresent();
     }
 }

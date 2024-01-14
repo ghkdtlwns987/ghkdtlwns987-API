@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -53,7 +55,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
                 .username(userName)
                 .userId(userId)
                 .phone(phone)
-                .roles(roles)
+                .roles(Collections.singletonList(Roles.USER.getId()))
                 .build();
 
         entityManager.persist(member);
