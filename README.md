@@ -100,6 +100,12 @@
   - 현재 권한은 `ROLE_USER`, `ROLE_ADMIN`이 있음.
 - Entity 수정으로 인한 테스트코드 수정
 
+(2024/01/15)
+- API <-> Auth 서버간 통신할 때 테스트코드는 어떻게 작성해야 하는가?
+  - 인증 정보를 가져온다? -> 로그인은 인증 서버에서 수행 후 토큰을 발급하는 방식으로 동작 ==> API 서버에서는 인증 토큰을 발급받지 않음.
+  - Auth 서버에서 테스트중... -> 처음엔 단순히 `MockMvc` 로 인증 헤더를 가져오는 방식으로 수행하려고 했는데 `Controller` 에서 요청을 받는게 아닌, `Spring Security` 기반의 필터로 적용되기 때문에 `MockMvc`가 동작하지 않음.
+  - 어떻게 모킹해야 하는지 고민중
+  - `MockServer` vs `MockMvc` 차이점 공부하기
 # 진행해야 할 내용
 - 테스트 코드 추가 작성
 - 기능 추가(update, withdraw)
@@ -126,6 +132,7 @@ A4. 그렇지 않다. 트랜잭션이 한번 커밋했기 때문에 Id가 증가
 # 꿀팁
 - TDD 할 때 Intellij live template으로 편하게 작성할 수 있음.  
 Settings -> Editor -> Live Template -> 다음과 같이 작성
+
 ```java
 @Test
 @DisplayName("$0$")

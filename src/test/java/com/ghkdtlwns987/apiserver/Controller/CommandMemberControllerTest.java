@@ -9,6 +9,8 @@ import com.ghkdtlwns987.apiserver.Member.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,8 +66,10 @@ public class CommandMemberControllerTest {
     MemberUpdateNicknameResponseDto memberUpdateNicknameResponse;
     MemberWithdrawalResponseDto memberWithdrawalResponseDto;
     MemberGetInformationResponseDto memberGetInformationResponseDto;
+
     @BeforeEach
     void setUp(){
+
         passwordEncoder = Mockito.mock(BCryptPasswordEncoder.class);
         member = Member.builder()
                 .Id(1L)
