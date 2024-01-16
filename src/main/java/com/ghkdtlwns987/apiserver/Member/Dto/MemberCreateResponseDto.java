@@ -1,5 +1,6 @@
 package com.ghkdtlwns987.apiserver.Member.Dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberCreateResponseDto {
     private String loginId;
     private String password;

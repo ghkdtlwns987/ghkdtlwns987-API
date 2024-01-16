@@ -1,5 +1,6 @@
 package com.ghkdtlwns987.apiserver.Member.Dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import lombok.AccessLevel;
@@ -15,6 +16,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberUpdateNicknameResponseDto {
     private String loginId;
     private String password;

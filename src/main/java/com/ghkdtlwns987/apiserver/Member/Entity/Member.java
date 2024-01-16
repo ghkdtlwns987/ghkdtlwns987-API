@@ -16,8 +16,8 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
