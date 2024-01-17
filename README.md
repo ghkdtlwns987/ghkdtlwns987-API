@@ -113,6 +113,11 @@
 - 회원 탈퇴 테스트 코드 작성
 - Repository 단 부터 테스트 코드에 대한 수정이 필요할 것으로 보임.
 
+(2024/01/17)
+- order, catalogs 프로젝트 생성 및 간단한 코드 작성
+- 추후 해당 프로젝트의 테스트코드 작성 예정
+- 우선 간단하게 작성하고 추후 기능 추가와 동시에 TDD 수행할 예정
+- 위 프로젝트로 Kafka와 같은 분산 서비스 통신에 대해 공부해볼 예정
 ### 의문점
 Q1. `@DataJpaTest와 직접 Mock객체를 주입받는 방식 vs MockitoAnnotations.openMocks(this) 로 객체를 생성하는 방식?;`
 A1. `@EntitiyManager`, `@JpaQueryFactory` 를 생성하고 주입받는 `TestConfig.java` 작성, 하지만 그래도 `Bean`이 등록되지 않아 우선 `@SpringBootTest`로 테스트 진행한다.
