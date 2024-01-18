@@ -118,6 +118,19 @@
 - 추후 해당 프로젝트의 테스트코드 작성 예정
 - 우선 간단하게 작성하고 추후 기능 추가와 동시에 TDD 수행할 예정
 - 위 프로젝트로 Kafka와 같은 분산 서비스 통신에 대해 공부해볼 예정
+
+(2024/01/18)
+- Order 도메인 추가
+- Order 서비스와 통신 수행
+- getMemberInfo() 함수에서 order 프로젝트와 통신 확인
+
++ 추가해야 할 점
+  - 예외처리
+  - Order 프로젝트 Entity 수정
+  - Catalog 프로젝트와 연동
+  - 테스트 코드 작성
+  - 기능 추가
+
 ### 의문점
 Q1. `@DataJpaTest와 직접 Mock객체를 주입받는 방식 vs MockitoAnnotations.openMocks(this) 로 객체를 생성하는 방식?;`
 A1. `@EntitiyManager`, `@JpaQueryFactory` 를 생성하고 주입받는 `TestConfig.java` 작성, 하지만 그래도 `Bean`이 등록되지 않아 우선 `@SpringBootTest`로 테스트 진행한다.

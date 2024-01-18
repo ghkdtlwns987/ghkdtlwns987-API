@@ -21,8 +21,11 @@ public enum ResultCode {
 
     CREATE_JOB_REQUEST_SUCCESS(200, "R001", "등록 되었습니다"),
     GET_JOB_STATUS_REQUEST_SUCCESS(200, "R002", "조회 되었습니다"),
-    RUN_JOB_REQUEST_SUCCESS(200, "R003", "실행 되었습니다.");
+    RUN_JOB_REQUEST_SUCCESS(200, "R003", "실행 되었습니다."),
 
+    GET_MEMBER_ORDER_REQUEST_SUCCESS(200, "O001", "조회 되었습니다."),
+
+    ;
     private int status;
     private final String code;
     private final String message;
