@@ -2,6 +2,7 @@ package com.ghkdtlwns987.apiserver.Order.Controller;
 
 import com.ghkdtlwns987.apiserver.Global.ResultCode;
 import com.ghkdtlwns987.apiserver.Member.Dto.ResultResponse;
+import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Service.Inter.CommandOrderService;
 import lombok.Getter;
@@ -34,7 +35,13 @@ public class CommandOrderController {
     }
 
     @PostMapping("/orders/{userId}")
-    public EntityModel<ResultResponse> createOrders(@PathVariable String userId){
-        return null;
+    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request){
+        ResponseOrderDto response = commandOrderService.createOrder(userId, request);
+        ResultResponse resultResponse = ResultResponse.of(ResultCode.CREATE_MEMBER_ORDER_REQUEST_SUCCESS, response);
+
+        EntityModel<ResultResponse> entityModel = EntityModel.of(resultResponse);
+        entityModel.add(linkTo(CommandOrderController.class).withSelfRel());
+
+        return entityModel;
     }
 }

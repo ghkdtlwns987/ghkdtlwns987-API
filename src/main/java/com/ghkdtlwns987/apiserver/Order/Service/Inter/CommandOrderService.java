@@ -1,5 +1,6 @@
 package com.ghkdtlwns987.apiserver.Order.Service.Inter;
 
+import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import org.springframework.http.ResponseEntity;
 
@@ -13,5 +14,5 @@ public interface CommandOrderService {
      */
     List<ResponseOrderDto> getOrderData(String userId);
 
-    ResponseOrderDto createOrder(String userId);
+    ResponseOrderDto createOrder(String userId, RequestOrderDto request);
 }

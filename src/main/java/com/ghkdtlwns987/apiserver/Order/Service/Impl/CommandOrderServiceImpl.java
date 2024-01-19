@@ -2,6 +2,7 @@ package com.ghkdtlwns987.apiserver.Order.Service.Impl;
 
 import com.ghkdtlwns987.apiserver.Order.Command.OrderCommand;
 import com.ghkdtlwns987.apiserver.Order.Config.OrderConfig;
+import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Service.Inter.CommandOrderService;
 
@@ -18,11 +19,11 @@ public class CommandOrderServiceImpl implements CommandOrderService {
 
     @Override
     public List<ResponseOrderDto> getOrderData(String userId) {
-        return orderCommand.getOrderData(userId);
+        return orderCommand.getOrderDataRequest(userId);
     }
 
     @Override
-    public ResponseOrderDto createOrder(String userId) {
-        return null;
+    public ResponseOrderDto createOrder(String userId, RequestOrderDto request) {
+        return orderCommand.createOrderRequest(userId, request);
     }
 }

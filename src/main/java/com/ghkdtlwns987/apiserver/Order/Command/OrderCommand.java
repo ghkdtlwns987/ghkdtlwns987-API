@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class OrderCommand {
     private final OrderConfig orderConfig;
     private final RestTemplate restTemplate;
-    public List<ResponseOrderDto> getOrderData(String userId) {
+    public List<ResponseOrderDto> getOrderDataRequest(String userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -45,7 +45,7 @@ public class OrderCommand {
     }
 
 
-    public ResponseOrderDto createOrder(String userId, RequestOrderDto request){
+    public ResponseOrderDto createOrderRequest(String userId, RequestOrderDto request){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -54,7 +54,7 @@ public class OrderCommand {
 
         URI uri = UriComponentsBuilder
                 .fromUriString(orderConfig.getOrderUrl())
-                .path("/order/" + userId + "/")
+                .path("/order/" + userId + "/orders")
                 .build()
                 .toUri();
 
