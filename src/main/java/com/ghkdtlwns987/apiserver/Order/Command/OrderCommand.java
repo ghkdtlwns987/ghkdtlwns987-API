@@ -49,10 +49,22 @@ public class OrderCommand {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
+        HttpEntity<RequestOrderDto> requestEntity = new HttpEntity<>(request, headers);
+
+
         URI uri = UriComponentsBuilder
                 .fromUriString(orderConfig.getOrderUrl())
                 .path("/order/" + userId + "/")
                 .build()
                 .toUri();
+
+        ResponseEntity<ResponseOrderDto> response = restTemplate.exchange(
+                uri,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<ResponseOrderDto>() {}
+        );
+
+        return response.getBody();
     }
 }
