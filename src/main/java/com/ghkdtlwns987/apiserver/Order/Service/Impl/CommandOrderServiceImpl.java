@@ -20,4 +20,9 @@ public class CommandOrderServiceImpl implements CommandOrderService {
     public List<ResponseOrderDto> getOrderData(String userId) {
         return orderCommand.getOrderData(userId);
     }
+
+    @Override
+    public ResponseOrderDto createOrder(String userId) {
+        return null;
+    }
 }

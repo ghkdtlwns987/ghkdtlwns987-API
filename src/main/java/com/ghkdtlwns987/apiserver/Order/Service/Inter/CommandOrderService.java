@@ -12,4 +12,6 @@ public interface CommandOrderService {
      * @return ResopnseEntity<List<ResponseOrderDto>>
      */
     List<ResponseOrderDto> getOrderData(String userId);
+
+    ResponseOrderDto createOrder(String userId);
 }
