@@ -1,6 +1,7 @@
 package com.ghkdtlwns987.apiserver.Order.Command;
 
 import com.ghkdtlwns987.apiserver.Order.Config.OrderConfig;
+import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,5 +42,17 @@ public class OrderCommand {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+
+    public ResponseOrderDto createOrder(String userId, RequestOrderDto request){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString(orderConfig.getOrderUrl())
+                .path("/order/" + userId + "/")
+                .build()
+                .toUri();
     }
 }
