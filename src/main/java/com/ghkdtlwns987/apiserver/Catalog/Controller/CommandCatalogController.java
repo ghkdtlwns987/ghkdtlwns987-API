@@ -18,11 +18,11 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api/v1/catalogs")
+@RequestMapping("/api/v1/catalog")
 @RequiredArgsConstructor
 public class CommandCatalogController {
     private final CommandCatalogService commandCatalogService;
-    @GetMapping("/")
+    @GetMapping("/category")
     public EntityModel<ResultResponse> getAllCatalogs(){
         List<ResponseCatalogDto> response = commandCatalogService.getAllCatalogs();
         ResultResponse resultResponse = ResultResponse.of(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS, response);
