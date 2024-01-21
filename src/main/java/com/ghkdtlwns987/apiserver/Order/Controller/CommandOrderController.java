@@ -1,15 +1,12 @@
 package com.ghkdtlwns987.apiserver.Order.Controller;
 
-import com.ghkdtlwns987.apiserver.Global.ResultCode;
-import com.ghkdtlwns987.apiserver.Member.Dto.ResultResponse;
+import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
+import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Service.Inter.CommandOrderService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +21,7 @@ public class CommandOrderController {
     private final CommandOrderService commandOrderService;
 
     @GetMapping("/orders/{userId}")
-    public EntityModel<ResultResponse> getMemberOrders(@PathVariable String userId){
+    public EntityModel<ResultResponse> getMemberOrders(@PathVariable String userId) throws Exception{
         List<ResponseOrderDto> response = commandOrderService.getOrderData(userId);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.GET_MEMBER_ORDER_REQUEST_SUCCESS, response);
 
@@ -35,7 +32,7 @@ public class CommandOrderController {
     }
 
     @PostMapping("/orders/{userId}")
-    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request){
+    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) throws Exception{
         ResponseOrderDto response = commandOrderService.createOrder(userId, request);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.CREATE_MEMBER_ORDER_REQUEST_SUCCESS, response);
 

@@ -2,14 +2,12 @@ package com.ghkdtlwns987.apiserver.Catalog.Controller;
 
 import com.ghkdtlwns987.apiserver.Catalog.Dto.ResponseCatalogDto;
 import com.ghkdtlwns987.apiserver.Catalog.Service.Inter.CommandCatalogService;
-import com.ghkdtlwns987.apiserver.Global.ResultCode;
-import com.ghkdtlwns987.apiserver.Member.Dto.ResultResponse;
+import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
+import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import com.ghkdtlwns987.apiserver.Order.Controller.CommandOrderController;
-import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

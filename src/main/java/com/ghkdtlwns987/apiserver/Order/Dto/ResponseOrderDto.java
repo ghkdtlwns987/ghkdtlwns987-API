@@ -14,9 +14,7 @@ public class ResponseOrderDto {
     private Integer qty;
     private Integer unitPrice;
     private Integer totalPrice;
-
     private String userId;
     private String orderId;
-
     private LocalDateTime orderedAt;
 }

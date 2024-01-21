@@ -1,6 +1,6 @@
-package com.ghkdtlwns987.apiserver.Member.Dto;
+package com.ghkdtlwns987.apiserver.Global.Dto;
 
-import com.ghkdtlwns987.apiserver.Global.ResultCode;
+import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import lombok.Getter;
 
 @Getter
@@ -9,7 +9,6 @@ public class ResultResponse {
     private String code;
     private String message;
     private Object data;
-
     public static ResultResponse of(ResultCode resultCode, Object data){
         return new ResultResponse(resultCode, data);
     }

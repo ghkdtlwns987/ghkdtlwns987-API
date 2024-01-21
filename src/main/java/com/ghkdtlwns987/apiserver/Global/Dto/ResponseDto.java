@@ -1,8 +1,7 @@
-package com.ghkdtlwns987.apiserver.Member.Dto;
+package com.ghkdtlwns987.apiserver.Global.Dto;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

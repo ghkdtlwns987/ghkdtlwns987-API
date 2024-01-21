@@ -1,8 +1,5 @@
 package com.ghkdtlwns987.apiserver.Member.Exception;
 
-
-import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
-
 public class ClientException extends RuntimeException {
     private final ErrorCode errorCode;
     private final int responseStatus;

@@ -3,8 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
-    //	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" // ⭐ Querydsl 플러그인 사용 X
-
 }
 
 group = 'com.ghkdtlwns987'

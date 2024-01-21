@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Global;
+package com.ghkdtlwns987.apiserver.Global.Config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

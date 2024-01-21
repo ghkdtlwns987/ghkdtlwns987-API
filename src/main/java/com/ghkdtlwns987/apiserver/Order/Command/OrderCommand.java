@@ -1,5 +1,6 @@
 package com.ghkdtlwns987.apiserver.Order.Command;
 
+import com.ghkdtlwns987.apiserver.Global.Dto.ResultListResponse;
 import com.ghkdtlwns987.apiserver.Order.Config.OrderConfig;
 import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
@@ -13,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -31,19 +31,18 @@ public class OrderCommand {
                 .build()
                 .toUri();
 
-        ResponseEntity<List<ResponseOrderDto>> response = restTemplate.exchange(
+        ResponseEntity<ResultListResponse<ResponseOrderDto>> responseEntity = restTemplate.exchange(
                 uri,
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                new ParameterizedTypeReference<List<ResponseOrderDto>>() {}
+                new ParameterizedTypeReference<ResultListResponse<ResponseOrderDto>>() {}
         );
 
-        List<ResponseOrderDto> result = response.getBody().stream()
-                .collect(Collectors.toList());
+        ResultListResponse<ResponseOrderDto> resultListResponse = responseEntity.getBody();
+        System.out.println("Received Response: " + resultListResponse);
 
-        return result;
+        return (List<ResponseOrderDto>) responseEntity.getBody();
     }
-
 
     public ResponseOrderDto createOrderRequest(String userId, RequestOrderDto request){
         HttpHeaders headers = new HttpHeaders();

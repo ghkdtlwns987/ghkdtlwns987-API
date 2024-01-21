@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Global;
+package com.ghkdtlwns987.apiserver.Global.Config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

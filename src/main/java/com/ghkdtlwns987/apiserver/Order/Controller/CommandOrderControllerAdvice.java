@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Member.Controller;
+package com.ghkdtlwns987.apiserver.Order.Controller;
 
 import com.ghkdtlwns987.apiserver.Global.Dto.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestControllerAdvice
 @Slf4j
-public class MemberControllerAdvice {
+public class CommandOrderControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDto<Object>> handleException(Exception e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(

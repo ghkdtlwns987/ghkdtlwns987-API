@@ -1,12 +1,11 @@
 package com.ghkdtlwns987.apiserver.Member.Controller;
 
-import com.ghkdtlwns987.apiserver.Global.ResultCode;
+import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
+import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import com.ghkdtlwns987.apiserver.Member.Dto.*;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 

@@ -40,3 +40,10 @@ order:
   url: ${ORDER}
 catalog:
   url: ${CATALOG}
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          client: DEBUG
