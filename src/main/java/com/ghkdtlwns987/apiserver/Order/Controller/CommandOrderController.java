@@ -1,6 +1,7 @@
 package com.ghkdtlwns987.apiserver.Order.Controller;
 
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
+import com.ghkdtlwns987.apiserver.Global.Dto.ResultListResponse;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
@@ -21,11 +22,10 @@ public class CommandOrderController {
     private final CommandOrderService commandOrderService;
 
     @GetMapping("/orders/{userId}")
-    public EntityModel<ResultResponse> getMemberOrders(@PathVariable String userId) throws Exception{
+    public EntityModel<ResultListResponse> getMemberOrders(@PathVariable String userId) throws Exception{
         List<ResponseOrderDto> response = commandOrderService.getOrderData(userId);
-        ResultResponse resultResponse = ResultResponse.of(ResultCode.GET_MEMBER_ORDER_REQUEST_SUCCESS, response);
-
-        EntityModel<ResultResponse> entityModel = EntityModel.of(resultResponse);
+        ResultListResponse resultResponse = ResultListResponse.of(ResultCode.GET_ORDER_REQUEST_SUCCESS, response);
+        EntityModel<ResultListResponse> entityModel = EntityModel.of(resultResponse);
         entityModel.add(linkTo(CommandOrderController.class).withSelfRel());
 
         return entityModel;

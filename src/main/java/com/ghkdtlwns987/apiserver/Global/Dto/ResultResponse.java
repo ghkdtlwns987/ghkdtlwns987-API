@@ -2,8 +2,12 @@ package com.ghkdtlwns987.apiserver.Global.Dto;
 
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class ResultResponse {
     private int status;
     private String code;
