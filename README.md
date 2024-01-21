@@ -124,6 +124,11 @@
 - Order 서비스와 통신 수행
 - getMemberInfo() 함수에서 order 프로젝트와 통신 확인
 
+(2024/01/22)
+- OrderCommand 수정
+  - 직렬화 문제가 발생(ResultResponse, ResultListResponse -> ResponseOrderDto로의 직렬화/역질렬화 문제) -> ObjectMapper()로 데이터를 매핑함
+- Order 서비스의 Respository Test
+
 + 추가해야 할 점
   - 예외처리
   - Order 프로젝트 Entity 수정

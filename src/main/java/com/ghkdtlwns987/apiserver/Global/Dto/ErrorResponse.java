@@ -1,5 +1,6 @@
-package com.ghkdtlwns987.apiserver.Member.Exception;
+package com.ghkdtlwns987.apiserver.Global.Dto;
 
+import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import jakarta.validation.ConstraintViolation;
 import lombok.AccessLevel;
 import lombok.Getter;

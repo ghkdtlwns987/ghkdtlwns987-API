@@ -1,4 +1,6 @@
-package com.ghkdtlwns987.apiserver.Member.Exception;
+package com.ghkdtlwns987.apiserver.Global.Exception;
+
+import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 
 public class ClientException extends RuntimeException {
     private final ErrorCode errorCode;

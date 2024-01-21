@@ -5,7 +5,7 @@ import com.ghkdtlwns987.apiserver.Member.Dto.MemberGetInformationResponseDto;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
-import com.ghkdtlwns987.apiserver.Member.Exception.ClientException;
+import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Persistent.QueryDslQueryMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Repository.CommandMemberRepository;
 import jakarta.persistence.EntityManager;

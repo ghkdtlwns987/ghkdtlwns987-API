@@ -1,5 +1,7 @@
-package com.ghkdtlwns987.apiserver.Member.Exception;
+package com.ghkdtlwns987.apiserver.Global.Exception;
 
+import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
+import com.ghkdtlwns987.apiserver.Global.Dto.ErrorResponse;
 import lombok.Getter;
 
 import java.util.ArrayList;

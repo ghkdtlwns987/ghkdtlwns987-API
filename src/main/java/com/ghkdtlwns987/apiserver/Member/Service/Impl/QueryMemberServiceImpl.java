@@ -2,7 +2,7 @@ package com.ghkdtlwns987.apiserver.Member.Service.Impl;
 
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
-import com.ghkdtlwns987.apiserver.Member.Exception.ClientException;
+import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Repository.QueryMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import lombok.RequiredArgsConstructor;

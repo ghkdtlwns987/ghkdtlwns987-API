@@ -5,12 +5,10 @@ import com.ghkdtlwns987.apiserver.Member.Controller.CommandMemberController;
 import com.ghkdtlwns987.apiserver.Member.Dto.*;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
-import com.ghkdtlwns987.apiserver.Member.Exception.ClientException;
+import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
 

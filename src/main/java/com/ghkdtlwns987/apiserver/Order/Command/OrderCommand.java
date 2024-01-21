@@ -46,14 +46,13 @@ public class OrderCommand {
         String jsonResponse = responseEntity.getBody();
 
         try {
-            // TypeReference를 사용하여 JSON 문자열을 객체로 변환
             ResultListResponse<ResponseOrderDto> resultListResponse = objectMapper.readValue(
                     jsonResponse,
                     new TypeReference<ResultListResponse<ResponseOrderDto>>() {}
             );
             System.out.println("Received Response: " + resultListResponse);
 
-            return resultListResponse.getData(); // 데이터만 반환하도록 수정
+            return resultListResponse.getData();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
