@@ -124,16 +124,26 @@
 - Order 서비스와 통신 수행
 - getMemberInfo() 함수에서 order 프로젝트와 통신 확인
 
-(2024/01/22)
+(2024/01/21)
 - OrderCommand 수정
   - 직렬화 문제가 발생(ResultResponse, ResultListResponse -> ResponseOrderDto로의 직렬화/역질렬화 문제) -> ObjectMapper()로 데이터를 매핑함
 - Order 서비스의 Respository Test
+
+(2024/01/22)
+- Order 프로젝트
+  - 테스트 코드 작성
+    - QueryOrderRepository
+    - CommandOrderRepository
+    - QueryOrderService
+    - CommandOrderService
 
 + 추가해야 할 점
   - 예외처리
   - Order 프로젝트 Entity 수정
   - Catalog 프로젝트와 연동
-  - 테스트 코드 작성
+  - Order 프로젝트 Controller 테스트코드 작성
+  - Catalog 프로젝트 Controller, Service 테스트코드 작성
+  - 프로젝트간 통신 과정에서 에러 발생 시 에러 메시지가 data에 포함되는 현상 수정
   - 기능 추가
 
 ### 의문점
