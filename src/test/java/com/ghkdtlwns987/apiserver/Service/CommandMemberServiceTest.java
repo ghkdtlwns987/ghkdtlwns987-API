@@ -7,7 +7,6 @@ import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberAlreadyExistsExce
 import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdNotExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberNicknameAlreadyExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
-import com.ghkdtlwns987.apiserver.Member.Exception.ErrorException;
 import com.ghkdtlwns987.apiserver.Member.Repository.CommandMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Service.Impl.CommandMemberServiceImpl;
 
@@ -25,10 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 @EntityListeners(AuditingEntityListener.class)
