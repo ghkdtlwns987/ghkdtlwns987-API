@@ -66,7 +66,6 @@ public class CommandMemberControllerTest {
 
     @BeforeEach
     void setUp(){
-
         passwordEncoder = Mockito.mock(BCryptPasswordEncoder.class);
         member = Member.builder()
                 .Id(1L)

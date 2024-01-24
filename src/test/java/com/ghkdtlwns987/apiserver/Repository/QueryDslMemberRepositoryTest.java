@@ -66,7 +66,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
     // email, loginId, nickname
     @Test
     @DisplayName("회원 검증 로직 중 email이 존재하지 않을 때")
-    void 회원_검증_로직_Email이_존재하지_않음() throws Exception{
+    void 회원_검증_로직_Email이_존재하지_않음(){
 
         // when
         boolean result = queryMemberRepository.existsMemberByEmail("failedEmail@naver.com");
@@ -78,7 +78,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검증 로직 중 loginId가 존재하지 않을 때")
-    void 회원_검증_로직_loginId가_존재하지_않음() throws Exception{
+    void 회원_검증_로직_loginId가_존재하지_않음(){
         // when
         boolean result = queryMemberRepository.existsMemberByLoginId("failedLoginId");
 
@@ -88,7 +88,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검증 로직 중 nickname이 존재하지 않을때")
-    void 회원_검증_로직_nickname이_존재하지_않음() throws Exception{
+    void 회원_검증_로직_nickname이_존재하지_않음(){
         // when
         boolean result = queryMemberRepository.existsMemberByNickname("failedNickname");
 
@@ -98,7 +98,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검색 실패(회원을 찾을 수 없음 - findById 테스트")
-    void 회원을_찾을수_없음_findById() throws Exception {
+    void 회원을_찾을수_없음_findById() {
         // when then
         assertThatThrownBy(() -> queryMemberRepository.findById(10L)
                 .orElseThrow(() -> new ClientException(
@@ -119,7 +119,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검색 실패(회원을 찾을 수 없음 - findMemberByLoginId 테스트")
-    void 회원을_찾을수_없음_findMemberByLoginId() throws Exception {
+    void 회원을_찾을수_없음_findMemberByLoginId() {
         // when then
         assertThatThrownBy(() -> queryMemberRepository.findMemberByLoginId("failedLoginId")
                 .orElseThrow(() -> new ClientException(
@@ -130,7 +130,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검색 실패(회원을 찾을 수 없음 - findMemberByPhone 테스트")
-    void 회원을_찾을수_없음_findMemberByPhone() throws Exception {
+    void 회원을_찾을수_없음_findMemberByPhone() {
         // when then
         assertThatThrownBy(() -> queryMemberRepository.findMemberByPhone("010-9999-9999")
                 .orElseThrow(() -> new ClientException(
@@ -153,7 +153,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검색 성공 - findMemberByLoginId 테스트")
-    void 회원검색_findMemberByLoginId() throws Exception{
+    void 회원검색_findMemberByLoginId(){
         // when
         Member foundMember = queryMemberRepository.findMemberByLoginId(loginId)
                 .orElseThrow(() -> new ClientException(
@@ -167,7 +167,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검색 성공 - findMemberByEmail 테스트")
-    void 회원검색_findMemberByEmail() throws Exception{
+    void 회원검색_findMemberByEmail(){
         // when
         Member foundMember = queryMemberRepository.findMemberByEmail(email)
                 .orElseThrow(() -> new ClientException(
@@ -181,7 +181,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검색 성공 - findMemberByPhone 테스트")
-    void 회원검색_findMemberByPhone() throws Exception{
+    void 회원검색_findMemberByPhone() {
         // when
         Member foundMember = queryMemberRepository.findMemberByPhone(phone)
                 .orElseThrow(() -> new ClientException(
@@ -195,7 +195,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검증 로직 중 email이 존재할 때")
-    void 회원_검증_로직_Email이_존재함() throws Exception{
+    void 회원_검증_로직_Email이_존재함() {
         // when
         boolean result = queryMemberRepository.existsMemberByEmail(email);
 
@@ -205,7 +205,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검증 로직 중 loginId가 존재할 때")
-    void 회원_검증_로직_loginId가_존재함() throws Exception{
+    void 회원_검증_로직_loginId가_존재함() {
         // when
         boolean result = queryMemberRepository.existsMemberByLoginId(loginId);
 
@@ -215,7 +215,7 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원 검증 로직 중 nickname이 존재할 때")
-    void 회원_검증_로직_nickname이_존재함() throws Exception{
+    void 회원_검증_로직_nickname이_존재함(){
         // when
         boolean result = queryMemberRepository.existsMemberByNickname(nickname);
 
