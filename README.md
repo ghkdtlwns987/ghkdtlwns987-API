@@ -159,6 +159,16 @@ A3. `IntegrationTest.java` 생성 후 `@SpringBootTest` 붙여 `extends` 하도�
 
 Q4. `제약조건 위반으로 인해 save() 호출이 이루어졌지만, 데이터는 저장되지 않았다. 제약조건을 만족한 상태로 값을 넣어 save()하게 된다고 했을 때 @Id는 1에서 2로 증가했을끼?`
 A4. 그렇지 않다. 트랜잭션이 한번 커밋했기 때문에 Id가 증가한 것이다.(Checked Exception -> Commit, Runtime Exception -> Roll Back)
+
+Q5. `mockMvc` 테스트를 수행할 때   
+    `when(queryOrderService.orderExistsByProductId(any())).thenReturn(true);`  
+        `when(commandOrderService.createOrder(any(), any(OrderRequestDto.class))).thenThrow(new ProductIdAlreadyExistsException());`  
+        와 같이 `any()`를 넣어줘야 하는 이유  
+
+A5. Http 요청을 보내면 Spring 은 내부에서 MessageConverter를 사용해 Json String을 객체로 반환한다.
+하지만 이는 실제 코드 내부에서 진행되기에 API로 전달되는 파라미터인 `OrderRequestDto`를 조작할 수 없다.
+그러므로 `OrderRequestDto`클래스 타입이라면 어떠한 객체도 처리할 수 있도록 `any()`를 넣어준다.  
+이 때 `any()`를 사용하면 인자로 어떤 객체를 넣어주는지 명시해주는게 좋다. -> `any(OrderRequestDto.class)`
 # 프로젝트 개발 절차
 - 테스트코드 작성 -> 실제 코드 구현 -> 검증 테스트 -> 코드 리팩토링
 
