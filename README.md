@@ -190,3 +190,11 @@ void $1$ throws Exception{
   - 구현체를 사용하는 대표적인 예시는 외부 라이브러리를 사용할때
 - 모든 클래스에 Exception을 정의하지 않아도 됨.
 - AssertThat() 으로 모든 필드를 비교하기 보다는 assertAll 과 같은 함수를 사용하는게 가독성에 도음이 되며 코드가 간결해짐
+
+
+# 환경 설정
+### Prod
+![img.png](img.png)
+
+### Dev
+![img.png](img.png)
