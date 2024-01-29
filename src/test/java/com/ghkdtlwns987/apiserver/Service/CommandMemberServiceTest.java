@@ -4,7 +4,7 @@ import com.ghkdtlwns987.apiserver.Member.Dto.*;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberAlreadyExistsException;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdNotExistsException;
+import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdAlreadyExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberNicknameAlreadyExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Member.Repository.CommandMemberRepository;
@@ -97,7 +97,7 @@ public class CommandMemberServiceTest {
         doReturn(false).when(queryMemberService).memberExistsByLoginId(loginId);
 
         // when
-        MemberLoginIdNotExistsException error = assertThrows(MemberLoginIdNotExistsException.class, () -> commandMemberService.updatePassword(loginId, newPassword));
+        MemberLoginIdAlreadyExistsException error = assertThrows(MemberLoginIdAlreadyExistsException.class, () -> commandMemberService.updatePassword(loginId, newPassword));
 
         // then
         assertThat(error.getErrorCode()).isEqualTo(ErrorCode.MEMBER_LOGINID_NOT_EXISTS);
@@ -123,7 +123,7 @@ public class CommandMemberServiceTest {
         doReturn(false).when(queryMemberService).memberExistsByLoginId(loginId);
 
         // when
-        MemberLoginIdNotExistsException error = assertThrows(MemberLoginIdNotExistsException.class, () -> commandMemberService.witrawalMember(loginId));
+        MemberLoginIdAlreadyExistsException error = assertThrows(MemberLoginIdAlreadyExistsException.class, () -> commandMemberService.witrawalMember(loginId));
 
         // then
         assertThat(error.getErrorCode()).isEqualTo(ErrorCode.MEMBER_LOGINID_NOT_EXISTS);

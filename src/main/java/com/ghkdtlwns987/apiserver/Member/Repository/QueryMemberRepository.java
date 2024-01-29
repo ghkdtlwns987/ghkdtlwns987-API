@@ -57,4 +57,6 @@ public interface QueryMemberRepository {
      */
     boolean existsMemberByPhone(String phone);
 
+    boolean isWithdraw();
+
 }

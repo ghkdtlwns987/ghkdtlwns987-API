@@ -15,7 +15,7 @@ public interface CommandMemberService {
      * @param newPassword
      * @return MemberUpdatePasswordResponseDto
      */
-    MemberUpdatePasswordResponseDto updatePassword(String loginId, String newPassword) throws Exception;
+    MemberUpdatePasswordResponseDto updatePassword(String loginId, MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto) throws Exception;
 
     /**
      * nickname 을 업데이트 합니다.

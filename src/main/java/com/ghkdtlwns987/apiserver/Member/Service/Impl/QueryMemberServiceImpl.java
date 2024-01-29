@@ -33,28 +33,4 @@ public class QueryMemberServiceImpl implements QueryMemberService {
                         "Login Id : " + loginId
                 ));
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean memberExistsByLoginId(String loginId) {
-        return queryMemberRepository.existsMemberByLoginId(loginId);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean memberExistsByEmail(String email) {
-        return queryMemberRepository.existsMemberByEmail(email);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean memberExistsByNickname(String nickname) {
-        return queryMemberRepository.existsMemberByNickname(nickname);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean memberExistsByPhone(String phone){
-        return queryMemberRepository.existsMemberByPhone(phone);
-    }
 }
