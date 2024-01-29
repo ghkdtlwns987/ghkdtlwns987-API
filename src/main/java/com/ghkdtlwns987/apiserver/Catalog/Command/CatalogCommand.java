@@ -22,6 +22,10 @@ public class CatalogCommand {
     private final CatalogConfig catalogConfig;
     private final RestTemplate restTemplate;
 
+    /**
+     * Catalog 서비스에 상품 전체 목록을 조회합니다.
+     * @return List<ResponseCatalogDto>
+     */
     public List<ResponseCatalogDto> getAllCatalogRequest(){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -47,6 +51,11 @@ public class CatalogCommand {
         return result;
     }
 
+    /**
+     * ProductName을 기반으로 Catalog 서비스의 상품을 검색합니다.
+     * @param productName
+     * @return List<ResponseCatalogDto>
+     */
     public List<ResponseCatalogDto> getCatalogRequestByProductName(String productName){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
