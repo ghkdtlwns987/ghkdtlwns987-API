@@ -85,4 +85,13 @@ public class QueryDslQueryMemberRepository implements QueryMemberRepository {
                 .where(member.phone.eq(phone))
                 .fetchFirst()).isPresent();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isWithdraw() {
+        QMember qmember = QMember.member;
+        return Optional.ofNullable(jpaQueryFactory.selectFrom(qmember)
+                .where(qmember.withdraw.eq(true))
+                .fetchFirst()).isPresent();
+    }
 }

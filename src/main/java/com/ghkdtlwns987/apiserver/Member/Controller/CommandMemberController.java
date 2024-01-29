@@ -47,9 +47,8 @@ public class CommandMemberController {
         return entityModel;
     }
     @PutMapping("/member/password/{loginId}")
-    public EntityModel<ResultResponse> updatePassword(@PathVariable String loginId, @Valid @RequestBody MemberUpdatePasswordRequestDto password) throws Exception{
-        final String newPassword = password.getNewPassword();
-        MemberUpdatePasswordResponseDto response = commandMemberService.updatePassword(loginId, newPassword);
+    public EntityModel<ResultResponse> updatePassword(@PathVariable String loginId, @Valid @RequestBody MemberUpdatePasswordRequestDto request) throws Exception{
+        MemberUpdatePasswordResponseDto response = commandMemberService.updatePassword(loginId, request);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.MEMBER_PASSWORD_UPDATE_SUCCESS, response);
 
         EntityModel<ResultResponse> entityModel = EntityModel.of(resultResponse);
