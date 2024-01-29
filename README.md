@@ -178,6 +178,12 @@ Q6. `Category` 프로젝트는 기본적으로 `data-dev.sql`파일이 들어가
 - TDD 할 때 Intellij live template으로 편하게 작성할 수 있음.  
 Settings -> Editor -> Live Template -> 다음과 같이 작성
 
+# Architecture Flow
+1. 사용자는 API서버에 회원 가입, 로그인 처리를 수행
+2. 인가된 사용자는 특정 상품을 조회할 수 있음(전체 보기, 상품 명 검색)
+3. 조회한 상품을 주문함.
+
+
 ```java
 @Test
 @DisplayName("$0$")

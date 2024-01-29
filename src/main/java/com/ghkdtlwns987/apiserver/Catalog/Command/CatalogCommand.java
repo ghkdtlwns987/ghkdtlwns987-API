@@ -39,8 +39,35 @@ public class CatalogCommand {
                 new ParameterizedTypeReference<List<ResponseCatalogDto>>() {}
         );
 
-        List<ResponseCatalogDto> result = response.getBody().stream()
-                .collect(Collectors.toList());
+        List<ResponseCatalogDto> result = response
+                .getBody()
+                .stream()
+                .toList();
+
+        return result;
+    }
+
+    public List<ResponseCatalogDto> getCatalogRequestByProductName(String productName){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString(catalogConfig.getCatalogUrl())
+                .path("/catalog/catalogs/" + productName)
+                .build()
+                .toUri();
+
+        ResponseEntity<List<ResponseCatalogDto>> response = restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                new ParameterizedTypeReference<List<ResponseCatalogDto>>() {}
+        );
+
+        List<ResponseCatalogDto> result = response
+                .getBody()
+                .stream()
+                .toList();
 
         return result;
     }
