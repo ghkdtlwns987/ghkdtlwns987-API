@@ -6,7 +6,9 @@ import com.ghkdtlwns987.apiserver.Member.Dto.*;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
+import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdNotExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
+import com.ghkdtlwns987.apiserver.Member.Repository.QueryMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +54,7 @@ public class CommandMemberControllerTest {
     BCryptPasswordEncoder passwordEncoder;
 
     @Mock
-    QueryMemberService queryMemberService;
+    QueryMemberRepository queryMemberRepository;
     @MockBean
     CommandMemberService commandMemberService;
 
@@ -98,7 +100,7 @@ public class CommandMemberControllerTest {
         memberUpdatePasswordResponse = MemberUpdatePasswordResponseDto.fromEntity(member);
         memberUpdateNicknameResponse = MemberUpdateNicknameResponseDto.fromEntity(member);
         memberGetInformationResponseDto = MemberGetInformationResponseDto.fromEntity(member);
-        queryMemberService = Mockito.mock(QueryMemberService.class);
+        queryMemberRepository = Mockito.mock(QueryMemberRepository.class);
     }
 
     @Test
@@ -290,9 +292,11 @@ public class CommandMemberControllerTest {
     @DisplayName("멤버 password 수정 실패 - 유효한 password가 8자 이하인 경우")
     void 멤버수정실패_비밀번호가_8자_이하() throws Exception{
         final String badPassword = "badpw12";
+        MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto = new MemberUpdatePasswordRequestDto();
+        memberUpdatePasswordRequestDto.setNewPassword(badPassword);
         // given
         String request = objectMapper.writeValueAsString(badPassword);
-        when(commandMemberService.updatePassword(loginId, badPassword)).thenReturn(memberUpdatePasswordResponse);
+        when(commandMemberService.updatePassword(loginId, memberUpdatePasswordRequestDto)).thenReturn(memberUpdatePasswordResponse);
 
         // when
         ResultActions perform = mockMvc.perform(put("/api/v1/member/password/" + loginId)
@@ -305,7 +309,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data", equalTo(null)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        verify(commandMemberService, times(0)).updatePassword(loginId, badPassword);
+        verify(commandMemberService, times(0)).updatePassword(loginId, memberUpdatePasswordRequestDto);
     }
 
     @Test
@@ -337,7 +341,7 @@ public class CommandMemberControllerTest {
         // given
         final String inCorrectLoginId = "incorrect42";
 
-        when(queryMemberService.memberExistsByLoginId(inCorrectLoginId)).thenReturn(false);
+        when(queryMemberRepository.findMemberByLoginId(inCorrectLoginId)).thenThrow(MemberLoginIdNotExistsException.class);
         when(commandMemberService.witrawalMember(inCorrectLoginId)).thenThrow(new ClientException(ErrorCode.MEMBER_LOGINID_NOT_EXISTS, "MEMBER LOGIN_ID NOT EXISTS"));
 
         // when
@@ -377,7 +381,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.errorMessage[0]", equalTo("MEMBER IS ALREADY EXISTS")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        verify(commandMemberService, times(1)).signup(any());
+        verify(commandMemberService, times(1)).signup(any(MemberCreateRequestDto.class));
     }
 
     @Test
@@ -385,9 +389,9 @@ public class CommandMemberControllerTest {
     void 멤버수정성공_유효한_nickname() throws Exception{
         String newNickname = "fffasegas";
         MemberUpdateNicknameRequestDto memberUpdateNicknameRequestDto = new MemberUpdateNicknameRequestDto(newNickname);
-        when(queryMemberService.memberExistsByLoginId(loginId)).thenReturn(true);
-        when(queryMemberService.memberExistsByNickname(nickname)).thenReturn(false);
-        when(commandMemberService.updateNickname(loginId, newNickname)).thenReturn(memberUpdateNicknameResponse);
+        when(queryMemberRepository.existsMemberByLoginId(any(String.class))).thenReturn(true);
+        when(queryMemberRepository.existsMemberByNickname(any(String.class))).thenReturn(false);
+        when(commandMemberService.updateNickname(any(String.class), any(String.class))).thenReturn(memberUpdateNicknameResponse);
 
         // when
         ResultActions perform = mockMvc.perform(put("/api/v1/member/nickname/" + loginId)
@@ -409,7 +413,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.withdrawal", equalTo(member.isWithdraw())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
-        verify(commandMemberService, times(1)).updateNickname(loginId, newNickname);
+        verify(commandMemberService, times(1)).updateNickname(any(String.class), any(String.class));
     }
 
     @Test
@@ -417,11 +421,13 @@ public class CommandMemberControllerTest {
     void 멤버수정성공_유효한_password() throws Exception{
         String correctPassword = "newPassword124512";
         String changedPassword = passwordEncoder.encode(correctPassword);
-        MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto = new MemberUpdatePasswordRequestDto(loginId, correctPassword);
+        MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto = new MemberUpdatePasswordRequestDto();
+        memberUpdatePasswordRequestDto.setNewPassword(correctPassword);
 
-        when(queryMemberService.memberExistsByLoginId(loginId)).thenReturn(true);
-        when(passwordEncoder.encode(correctPassword)).thenReturn(changedPassword);
-        when(commandMemberService.updatePassword(loginId, correctPassword)).thenReturn(memberUpdatePasswordResponse);
+        when(queryMemberRepository.existsMemberByLoginId(any(String.class))).thenReturn(true);
+        when(passwordEncoder.encode(any(String.class))).thenReturn(changedPassword);
+        when(commandMemberService.updatePassword(any(String.class), any(MemberUpdatePasswordRequestDto.class))).thenReturn(memberUpdatePasswordResponse);
+
 
         // when
         ResultActions perform = mockMvc.perform(put("/api/v1/member/password/" + loginId)
@@ -442,7 +448,7 @@ public class CommandMemberControllerTest {
                 .andExpect(jsonPath("$.data.roles", equalTo(member.getRoles())))
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
 
-        verify(commandMemberService, times(1)).updatePassword(loginId, correctPassword);
+        verify(commandMemberService, times(1)).updatePassword(any(String.class), any(MemberUpdatePasswordRequestDto.class));
     }
 
 
@@ -489,8 +495,9 @@ public class CommandMemberControllerTest {
     @DisplayName("멤버삭제성공")
     void 멤버삭제성공() throws Exception{
         // given
-        when(queryMemberService.memberExistsByLoginId(loginId)).thenReturn(true);
-        when(commandMemberService.witrawalMember(loginId)).thenReturn(memberWithdrawalResponseDto);
+        when(queryMemberRepository.existsMemberByLoginId(any())).thenReturn(true);
+        when(queryMemberRepository.isWithdraw()).thenReturn(memberWithdrawalResponseDto.isWithdrawal());
+        when(commandMemberService.witrawalMember(any())).thenReturn(memberWithdrawalResponseDto);
 
         //when
         ResultActions perform = mockMvc.perform(delete("/api/v1/member/" + loginId)
@@ -518,7 +525,7 @@ public class CommandMemberControllerTest {
     @DisplayName("멤버조회성공")
     void 멤버조회성공() throws Exception{
         // given
-        when(queryMemberService.memberExistsByLoginId(loginId)).thenReturn(true);
+        when(queryMemberRepository.existsMemberByLoginId(loginId)).thenReturn(true);
         when(commandMemberService.getMemberInfo(loginId)).thenReturn(memberGetInformationResponseDto);
 
         //when

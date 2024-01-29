@@ -18,9 +18,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CommandMemberServiceValidation {
     private final QueryMemberRepository queryMemberRepository;
-    private final QueryMemberService queryMemberService;
     @Before("execution(* com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService.signup(..)) " + "&& args(memberCreateRequestDto)")
-    private void signupMemberValidation(MemberCreateRequestDto memberCreateRequestDto) throws Exception{
+    private void signupMemberValidation(MemberCreateRequestDto memberCreateRequestDto) {
         if(queryMemberRepository.existsMemberByLoginId(memberCreateRequestDto.getLoginId())){
             throw new MemberLoginIdAlreadyExistsException();
         }
