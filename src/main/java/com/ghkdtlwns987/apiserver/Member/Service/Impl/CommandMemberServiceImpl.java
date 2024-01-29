@@ -7,8 +7,6 @@ import com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +30,6 @@ public class CommandMemberServiceImpl implements CommandMemberService {
         Member member = queryMemberService.findMemberByLoginId(loginId);
         member.updateMemberPassword(memberUpdatePasswordRequestDto.getNewPassword());
         return MemberUpdatePasswordResponseDto.fromEntity(member);
-
     }
 
     @Override
@@ -45,7 +42,7 @@ public class CommandMemberServiceImpl implements CommandMemberService {
 
     @Override
     @Transactional
-    public MemberWithdrawalResponseDto witrawalMember(String loginId)  {
+    public MemberWithdrawalResponseDto witrawalMember(String loginId) {
         Member member = queryMemberService.findMemberByLoginId(loginId);
         member.withdrawMember();
         return MemberWithdrawalResponseDto.fromEntity(member);
