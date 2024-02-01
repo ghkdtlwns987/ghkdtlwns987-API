@@ -21,15 +21,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class CommandOrderController {
     private final CommandOrderService commandOrderService;
 
-    @GetMapping("/orders/{userId}")
-    public EntityModel<ResultListResponse> getMemberOrders(@PathVariable String userId) throws Exception{
-        List<ResponseOrderDto> response = commandOrderService.getOrderData(userId);
-        ResultListResponse resultResponse = ResultListResponse.of(ResultCode.GET_ORDER_REQUEST_SUCCESS, response);
-        EntityModel<ResultListResponse> entityModel = EntityModel.of(resultResponse);
-        entityModel.add(linkTo(CommandOrderController.class).withSelfRel());
-
-        return entityModel;
-    }
 
     @PostMapping("/orders/{userId}")
     public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) throws Exception{

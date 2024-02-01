@@ -22,42 +22,10 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OrderCommand {
+public class CommandOrder {
     private final OrderConfig orderConfig;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-    public List<ResponseOrderDto> getOrderDataRequest(String userId) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        URI uri = UriComponentsBuilder
-                .fromUriString(orderConfig.getOrderUrl())
-                .path("/order/" + userId + "/orders")
-                .build()
-                .toUri();
-
-        ResponseEntity<String> responseEntity = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                String.class
-        );
-
-        String jsonResponse = responseEntity.getBody();
-
-        try {
-            ResultListResponse<ResponseOrderDto> resultListResponse = objectMapper.readValue(
-                    jsonResponse,
-                    new TypeReference<ResultListResponse<ResponseOrderDto>>() {}
-            );
-            System.out.println("Received Response: " + resultListResponse);
-
-            return resultListResponse.getData();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public ResponseOrderDto createOrderRequest(String userId, RequestOrderDto request) {
         HttpHeaders headers = new HttpHeaders();
@@ -96,5 +64,4 @@ public class OrderCommand {
             return null;
         }
     }
-
 }

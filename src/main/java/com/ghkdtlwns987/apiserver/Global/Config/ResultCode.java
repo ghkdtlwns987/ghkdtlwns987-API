@@ -30,7 +30,10 @@ public enum ResultCode {
     GET_ORDER_REQUEST_SUCCESS(200, "O001", "주문 내역을 조회했습니다."),
 
     GET_MEMBER_ORDER_REQUEST_SUCCESS(200, "C001", "회원 주문이 조회 되었습니다."),
+
+    CREATE_CATALOG_REQUEST_SUCCESS(200, "C001", "상품 등록이 완료되었습니다."),
     GET_ALL_CATALOG_REQUEST_SUCCESS(200, "C001", "전체 상품 조회가 완료되었습니다."),
+    GET_CATALOG_REQUEST_SUCCESS(200, "C001", "상품 조회가 완료되었습니다."),
     ;
     private int status;
     private final String code;
