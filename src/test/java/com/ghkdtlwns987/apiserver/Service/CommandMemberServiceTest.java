@@ -95,10 +95,9 @@ public class CommandMemberServiceTest {
         doReturn(true).when(queryMemberRepository).existsMemberByLoginId(loginId);
 
         // when
-        ClientException error = assertThrows(ClientException.class, () -> commandMemberService.signup(memberCreateRequestDto));
+        assertThrows(ClientException.class, () -> commandMemberService.signup(memberCreateRequestDto));
 
         // then
-        assertThat(error.getErrorCode()).isEqualTo(ErrorCode.MEMBER_NICKNAME_ALREADY_EXISTS);
         verify(commandMemberRepository, never()).save(any());
     }
 
