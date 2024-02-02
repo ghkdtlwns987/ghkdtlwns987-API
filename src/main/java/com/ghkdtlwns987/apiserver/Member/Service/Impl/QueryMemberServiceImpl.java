@@ -21,7 +21,7 @@ public class QueryMemberServiceImpl implements QueryMemberService {
         return queryMemberRepository.findById(Id)
                 .orElseThrow(() -> new ClientException(
                         ErrorCode.MEMBER_NOT_EXISTS,
-                        "Member Id : " + Id
+                        "Member Not Found (Member Id) : " + Id
                 ));
     }
 
@@ -30,7 +30,7 @@ public class QueryMemberServiceImpl implements QueryMemberService {
         return queryMemberRepository.findMemberByLoginId(loginId)
                 .orElseThrow(() -> new ClientException(
                         ErrorCode.MEMBER_LOGINID_NOT_EXISTS,
-                        "Login Id : " + loginId
+                        "Member Not Found (Login Id) : " + loginId
                 ));
     }
 }

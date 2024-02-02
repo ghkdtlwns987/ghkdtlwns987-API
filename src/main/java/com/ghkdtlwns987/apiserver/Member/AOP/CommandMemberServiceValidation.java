@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CommandMemberServiceValidation {
     private final QueryMemberRepository queryMemberRepository;
+
     @Before("execution(* com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService.signup(..)) " + "&& args(memberCreateRequestDto)")
     private void signupMemberValidation(MemberCreateRequestDto memberCreateRequestDto) {
         if(queryMemberRepository.existsMemberByLoginId(memberCreateRequestDto.getLoginId())){
@@ -79,4 +80,5 @@ public class CommandMemberServiceValidation {
             throw new MemberAlreadyWithdrawedException();
         }
     }
+
 }

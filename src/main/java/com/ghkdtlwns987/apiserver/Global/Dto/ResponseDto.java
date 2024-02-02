@@ -9,17 +9,12 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
-public class ResponseDto <T> {
-
+public class ResponseDto<T> {
     private boolean success;
-
     @JsonIgnore
     private HttpStatus status;
-    private final T data;
-    private List<String> errorMessage;
+    private T data;
+    private List<String> errorMessages;
 
     public static <T> ResponseDtoBuilder<T> builder() {
         return new ResponseDtoBuilder();
@@ -30,11 +25,26 @@ public class ResponseDto <T> {
         return this.status.value();
     }
 
-    public ResponseDto(boolean success, HttpStatus status, T data, List<String> errorMessage) {
+    public boolean isSuccess() {
+        return this.success;
+    }
+
+    public T getData() {
+        return this.data;
+    }
+
+    public List<String> getErrorMessages() {
+        return this.errorMessages;
+    }
+
+    public ResponseDto() {
+    }
+
+    public ResponseDto(boolean success, HttpStatus status, T data, List<String> errorMessages) {
         this.success = success;
         this.status = status;
         this.data = data;
-        this.errorMessage = errorMessage;
+        this.errorMessages = errorMessages;
     }
 
     public static class ResponseDtoBuilder<T> {
@@ -42,6 +52,9 @@ public class ResponseDto <T> {
         private HttpStatus status;
         private T data;
         private List<String> errorMessages;
+
+        ResponseDtoBuilder() {
+        }
 
         public ResponseDtoBuilder<T> success(boolean success) {
             this.success = success;
@@ -68,7 +81,7 @@ public class ResponseDto <T> {
         }
 
         public String toString() {
-            return "ResponseDTO.ResponseDTOBuilder(success=" + this.success + ", status = " + this.status + ", data = " + this.data + " , errorMessages = " + this.errorMessages + ")";
+            return "ResponseDto.ResponseDtoBuilder(success=" + this.success + ", status=" + this.status + ", data=" + this.data + ", errorMessages=" + this.errorMessages + ")";
         }
     }
 }

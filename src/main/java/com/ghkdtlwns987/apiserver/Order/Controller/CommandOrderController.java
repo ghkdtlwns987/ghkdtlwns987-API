@@ -23,7 +23,7 @@ public class CommandOrderController {
 
 
     @PostMapping("/orders/{userId}")
-    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) throws Exception{
+    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) {
         ResponseOrderDto response = commandOrderService.createOrder(userId, request);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.CREATE_MEMBER_ORDER_REQUEST_SUCCESS, response);
 

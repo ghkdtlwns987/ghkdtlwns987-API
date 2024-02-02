@@ -18,10 +18,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @RequestMapping("/api/v1/member")
 @RequiredArgsConstructor
-public class QueryOrderControllerAdvice {
+public class QueryOrderController {
     private final QueryOrderService queryOrderService;
     @GetMapping("/orders/{userId}")
-    public EntityModel<ResultListResponse> getMemberOrders(@PathVariable String userId) throws Exception{
+    public EntityModel<ResultListResponse> getMemberOrders(@PathVariable String userId) {
         List<ResponseOrderDto> response = queryOrderService.getOrderData(userId);
         ResultListResponse resultResponse = ResultListResponse.of(ResultCode.GET_ORDER_REQUEST_SUCCESS, response);
         EntityModel<ResultListResponse> entityModel = EntityModel.of(resultResponse);

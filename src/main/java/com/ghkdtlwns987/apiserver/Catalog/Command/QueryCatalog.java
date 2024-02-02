@@ -7,11 +7,8 @@ import com.ghkdtlwns987.apiserver.Catalog.Config.CatalogConfig;
 import com.ghkdtlwns987.apiserver.Catalog.Dto.ResponseCatalogDto;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultListResponse;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
-import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
-import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -116,7 +112,6 @@ public class QueryCatalog {
         );
 
         String jsonResponse = response.getBody();
-
         try {
             ResultListResponse<ResponseCatalogDto> resultListResponse = objectMapper.readValue(
                     jsonResponse,

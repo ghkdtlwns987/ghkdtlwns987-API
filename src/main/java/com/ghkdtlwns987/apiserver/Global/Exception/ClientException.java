@@ -1,10 +1,11 @@
 package com.ghkdtlwns987.apiserver.Global.Exception;
 
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
+import org.springframework.http.HttpStatus;
 
 public class ClientException extends RuntimeException {
     private final ErrorCode errorCode;
-    private final int responseStatus;
+    private final HttpStatus responseStatus;
     private final String displayErrorMessage;
 
     public ClientException(ErrorCode errorCode, String messageForLog) {
@@ -26,7 +27,7 @@ public class ClientException extends RuntimeException {
         return this.errorCode;
     }
 
-    public int getResponseStatus() {
+    public HttpStatus getResponseStatus() {
         return this.responseStatus;
     }
 }
