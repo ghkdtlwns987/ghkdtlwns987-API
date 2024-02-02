@@ -17,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class CommandMemberController {
     private final CommandMemberService commandMemberService;
     @GetMapping("/member/{loginId}")
-    public EntityModel<ResultResponse> getMemberInfo(@PathVariable String loginId) throws Exception{
+    public EntityModel<ResultResponse> getMemberInfo(@PathVariable String loginId) {
         MemberGetInformationResponseDto response = commandMemberService.getMemberInfo(loginId);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.MEMBER_INFORMATION_READ_SUCCESS, response);
         EntityModel<ResultResponse> entityModel = EntityModel.of(resultResponse);
@@ -37,7 +37,7 @@ public class CommandMemberController {
     }
 
     @PutMapping("/member/nickname/{loginId}")
-    public EntityModel<ResultResponse> updateNickname(@PathVariable String loginId, @Valid @RequestBody MemberUpdateNicknameRequestDto nickname) throws Exception{
+    public EntityModel<ResultResponse> updateNickname(@PathVariable String loginId, @Valid @RequestBody MemberUpdateNicknameRequestDto nickname) {
         final String newNickname = nickname.getNewNickname();
         MemberUpdateNicknameResponseDto response = commandMemberService.updateNickname(loginId, newNickname);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.MEMBER_NICKNAME_UPDATE_SUCCESS, response);
@@ -47,7 +47,7 @@ public class CommandMemberController {
         return entityModel;
     }
     @PutMapping("/member/password/{loginId}")
-    public EntityModel<ResultResponse> updatePassword(@PathVariable String loginId, @Valid @RequestBody MemberUpdatePasswordRequestDto request) throws Exception{
+    public EntityModel<ResultResponse> updatePassword(@PathVariable String loginId, @Valid @RequestBody MemberUpdatePasswordRequestDto request) {
         MemberUpdatePasswordResponseDto response = commandMemberService.updatePassword(loginId, request);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.MEMBER_PASSWORD_UPDATE_SUCCESS, response);
 
@@ -57,7 +57,7 @@ public class CommandMemberController {
     }
 
     @DeleteMapping("/member/{loginId}")
-    public EntityModel<ResultResponse> withdrawMember(@PathVariable String loginId) throws Exception{
+    public EntityModel<ResultResponse> withdrawMember(@PathVariable String loginId) {
         MemberWithdrawalResponseDto response = commandMemberService.witrawalMember(loginId);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.MEMBER_WITHDRAWAL_SUCCESS, response);
 
