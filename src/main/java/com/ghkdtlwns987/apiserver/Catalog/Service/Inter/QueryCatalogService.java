@@ -2,6 +2,7 @@ package com.ghkdtlwns987.apiserver.Catalog.Service.Inter;
 
 import com.ghkdtlwns987.apiserver.Catalog.Dto.ResponseCatalogDto;
 
+import java.rmi.ServerException;
 import java.util.List;
 
 public interface QueryCatalogService {
@@ -16,7 +17,7 @@ public interface QueryCatalogService {
      * @param productId
      * @return ResponseCatalogDto
      */
-    ResponseCatalogDto getCatalogsByProductId(String productId);
+    ResponseCatalogDto getCatalogsByProductId(String productId) throws ServerException;
 
     /**
      * ProductName을 기반으로 Catalog를 조회하는 기능입니다.

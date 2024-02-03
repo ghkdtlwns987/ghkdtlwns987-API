@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.ServerException;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -39,7 +40,7 @@ public class QueryCatalogController {
     }
 
     @GetMapping("/catalog/Id/{productId}")
-    public EntityModel<ResultResponse> getCatalogsByProductId(@PathVariable String productId){
+    public EntityModel<ResultResponse> getCatalogsByProductId(@PathVariable String productId) throws ServerException {
         ResponseCatalogDto response = queryCatalogService.getCatalogsByProductId(productId);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.GET_CATALOG_REQUEST_SUCCESS, response);
 

@@ -4,6 +4,7 @@ import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import org.springframework.http.ResponseEntity;
 
+import java.rmi.ServerException;
 import java.util.List;
 
 public interface CommandOrderService {
@@ -12,5 +13,5 @@ public interface CommandOrderService {
      * @param userId
      * @return ResopnseEntity<List<ResponseOrderDto>>
      */
-    ResponseOrderDto createOrder(String userId, RequestOrderDto request);
+    ResponseOrderDto createOrder(String userId, RequestOrderDto request) throws ServerException;
 }

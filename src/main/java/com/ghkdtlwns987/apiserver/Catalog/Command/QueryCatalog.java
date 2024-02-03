@@ -2,19 +2,24 @@ package com.ghkdtlwns987.apiserver.Catalog.Command;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Catalog.Config.CatalogConfig;
 import com.ghkdtlwns987.apiserver.Catalog.Dto.ResponseCatalogDto;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultListResponse;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
+import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
+import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.rmi.ServerException;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +64,7 @@ public class QueryCatalog {
         }
     }
 
-    public ResponseCatalogDto getCategoriesByProductIdRequest(String productId){
+    public ResponseCatalogDto getCategoriesByProductIdRequest(String productId) throws ServerException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -69,16 +74,16 @@ public class QueryCatalog {
                 .build()
                 .toUri();
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                String.class
-        );
-
-        String jsonResponse = response.getBody();
-
         try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+
+            String jsonResponse = response.getBody();
+
             ResultResponse resultResponse = objectMapper.readValue(
                     jsonResponse,
                     ResultResponse.class
@@ -89,9 +94,19 @@ public class QueryCatalog {
             return Optional.ofNullable(data)
                     .map(d -> objectMapper.convertValue(d, ResponseCatalogDto.class))
                     .orElseThrow(() -> new RuntimeException("Failed to map JSON response to ResponseCatalogDto"));
+        } catch (HttpClientErrorException e){
+            log.error("", e);
+
+            if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
+                throw new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "ProductId Not Exists Exists");
+            }
+            throw new ServerException(
+                    ErrorCode.INTERNAL_SERVER_ERROR.getCode()
+            );
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
         } catch (JsonProcessingException e) {
-            log.error("Error processing JSON response", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

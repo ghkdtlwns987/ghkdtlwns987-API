@@ -1,7 +1,6 @@
 package com.ghkdtlwns987.apiserver.Order.Controller;
 
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
-import com.ghkdtlwns987.apiserver.Global.Dto.ResultListResponse;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
@@ -10,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.rmi.ServerException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -23,7 +22,7 @@ public class CommandOrderController {
 
 
     @PostMapping("/orders/{userId}")
-    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) {
+    public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) throws ServerException {
         ResponseOrderDto response = commandOrderService.createOrder(userId, request);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.CREATE_MEMBER_ORDER_REQUEST_SUCCESS, response);
 
