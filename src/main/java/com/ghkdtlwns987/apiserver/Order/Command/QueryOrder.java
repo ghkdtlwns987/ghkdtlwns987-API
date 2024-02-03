@@ -34,16 +34,16 @@ public class QueryOrder {
                 .build()
                 .toUri();
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                String.class
-        );
-
-        String jsonResponse = responseEntity.getBody();
-
         try {
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    String.class
+            );
+
+            String jsonResponse = responseEntity.getBody();
+
             ResultListResponse<ResponseOrderDto> resultListResponse = objectMapper.readValue(
                     jsonResponse,
                     new TypeReference<ResultListResponse<ResponseOrderDto>>() {}
@@ -51,7 +51,8 @@ public class QueryOrder {
             System.out.println("Received Response: " + resultListResponse);
 
             return resultListResponse.getData();
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
         }

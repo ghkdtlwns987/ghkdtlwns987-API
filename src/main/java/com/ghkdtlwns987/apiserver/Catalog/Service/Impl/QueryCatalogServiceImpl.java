@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.rmi.ServerException;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class QueryCatalogServiceImpl implements QueryCatalogService {
     }
 
     @Override
-    public ResponseCatalogDto getCatalogsByProductId(String productId) {
+    public ResponseCatalogDto getCatalogsByProductId(String productId) throws ServerException {
         return queryCatalog.getCategoriesByProductIdRequest(productId);
     }
 

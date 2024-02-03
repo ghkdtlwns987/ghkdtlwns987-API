@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.rmi.ServerException;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
@@ -20,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class CommandCatalogController {
     private final CommandCatalog commandCatalog;
     @PostMapping("/catalog")
-    public EntityModel<ResultResponse> createCatalogs(@RequestBody RequestCatalogDto requestCatalogDto){
+    public EntityModel<ResultResponse> createCatalogs(@RequestBody RequestCatalogDto requestCatalogDto) throws ServerException {
         ResponseCatalogDto response = commandCatalog.createCatalogRequest(requestCatalogDto);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.CREATE_CATALOG_REQUEST_SUCCESS, response);
 

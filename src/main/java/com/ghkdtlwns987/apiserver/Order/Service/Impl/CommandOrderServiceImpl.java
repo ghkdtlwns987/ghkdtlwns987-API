@@ -8,6 +8,8 @@ import com.ghkdtlwns987.apiserver.Order.Service.Inter.CommandOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.rmi.ServerException;
 import java.util.List;
 
 @Service
@@ -17,7 +19,7 @@ public class CommandOrderServiceImpl implements CommandOrderService {
     private final CommandOrder commandOrder;
 
     @Override
-    public ResponseOrderDto createOrder(String userId, RequestOrderDto request) {
+    public ResponseOrderDto createOrder(String userId, RequestOrderDto request) throws ServerException {
         return commandOrder.createOrderRequest(userId, request);
     }
 }
