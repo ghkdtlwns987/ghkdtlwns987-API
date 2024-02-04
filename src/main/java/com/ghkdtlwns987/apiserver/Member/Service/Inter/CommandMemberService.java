@@ -12,7 +12,7 @@ public interface CommandMemberService {
 
     /**
      * Password 를 업데이트 합니다.
-     * @param newPassword
+     * @param memberUpdatePasswordRequestDto
      * @return MemberUpdatePasswordResponseDto
      */
     MemberUpdatePasswordResponseDto updatePassword(String loginId, MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto);

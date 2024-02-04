@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -291,26 +292,29 @@ public class CommandMemberControllerTest {
     @Test
     @DisplayName("멤버 password 수정 실패 - 유효한 password가 8자 이하인 경우")
     void 멤버수정실패_비밀번호가_8자_이하() throws Exception{
-        final String badPassword = "badpw12";
-        MemberUpdatePasswordRequestDto memberUpdatePasswordRequestDto = new MemberUpdatePasswordRequestDto();
-        memberUpdatePasswordRequestDto.setNewPassword(badPassword);
+        final String badPassword = "badpw1";
+
         // given
-        String request = objectMapper.writeValueAsString(badPassword);
-        when(commandMemberService.updatePassword(loginId, memberUpdatePasswordRequestDto)).thenReturn(memberUpdatePasswordResponse);
+        MemberUpdatePasswordRequestDto requestDto = new MemberUpdatePasswordRequestDto(badPassword);
+//        when(commandMemberService.updatePassword(any(String.class), any(MemberUpdatePasswordRequestDto.class))).thenReturn(null);
+        String request = objectMapper.writeValueAsString(requestDto);
 
         // when
         ResultActions perform = mockMvc.perform(put("/api/v1/member/password/" + loginId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request))
+                .content(request)
         );
 
         // then
         perform.andDo(print()).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.errorMessages", equalTo(List.of("[비밀번호는 최소 8자 이상으로 입력해야 합니다.]"))))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        verify(commandMemberService, times(0)).updatePassword(loginId, memberUpdatePasswordRequestDto);
+        verify(commandMemberService, times(0)).updatePassword(any(String.class), any(MemberUpdatePasswordRequestDto.class));
     }
+
+
 
     @Test
     @DisplayName("멤버 nickname 수정 실패 - 유효한 nickname이 아님")
@@ -378,7 +382,7 @@ public class CommandMemberControllerTest {
         // then
         perform.andDo(print()).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.data", equalTo(null)))
-                .andExpect(jsonPath("$.errorMessage[0]", equalTo("MEMBER IS ALREADY EXISTS")))
+                .andExpect(jsonPath("$.errorMessages[0]", equalTo("MEMBER IS ALREADY EXISTS")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(1)).signup(any(MemberCreateRequestDto.class));

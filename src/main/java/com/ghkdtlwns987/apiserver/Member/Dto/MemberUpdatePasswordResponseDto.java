@@ -14,8 +14,8 @@ import java.util.List;
  * 회원의 암호 변경이 성공했을 때 응답하게될 Dto 입니다.
  */
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberUpdatePasswordResponseDto {
     private String loginId;
