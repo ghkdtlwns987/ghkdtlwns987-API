@@ -26,7 +26,7 @@ public class CommandMemberController {
         return entityModel;
     }
     @PostMapping("/member")
-    public EntityModel<ResultResponse> create(@RequestBody @Valid MemberCreateRequestDto member) throws Exception{
+    public EntityModel<ResultResponse> create(@RequestBody @Valid MemberCreateRequestDto member){
         MemberCreateResponseDto response =  commandMemberService.signup(member);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.REGISTER_SUCCESS, response);
 

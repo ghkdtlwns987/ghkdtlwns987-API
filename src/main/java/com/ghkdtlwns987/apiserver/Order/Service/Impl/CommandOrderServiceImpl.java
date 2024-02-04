@@ -5,6 +5,7 @@ import com.ghkdtlwns987.apiserver.Order.Dto.RequestOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Dto.ResponseOrderDto;
 import com.ghkdtlwns987.apiserver.Order.Service.Inter.CommandOrderService;
 
+import com.ghkdtlwns987.apiserver.Order.Service.Inter.QueryOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -138,12 +138,13 @@
     - CommandOrderService
 
 + 추가해야 할 점
-  - 예외처리
+  - 예외처리(O)
   - Order 프로젝트 Entity 수정
-  - Catalog 프로젝트와 연동
-  - Order 프로젝트 Controller 테스트코드 작성
-  - Catalog 프로젝트 Controller, Service 테스트코드 작성
-  - 프로젝트간 통신 과정에서 에러 발생 시 에러 메시지가 data에 포함되는 현상 수정
+  - Catalog 프로젝트와 연동(O)
+  - Order 프로젝트 Controller 테스트코드 작성(O)
+  - Catalog 프로젝트 Controller, Service 테스트코드 작성(O)
+  - 프로젝트간 통신 과정에서 에러 발생 시 에러 메시지가 data에 포함되는 현상 수정(O)
+  - 서비스간 통신시 Order 서비스에서 Catalog 서비스의 정보를 불러오는 로직 추가
   - 기능 추가
 
 ### 의문점

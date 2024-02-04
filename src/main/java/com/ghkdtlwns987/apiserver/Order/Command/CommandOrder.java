@@ -64,9 +64,13 @@ public class CommandOrder {
                     .orElseThrow(() -> new RuntimeException("Failed to map JSON response to ResponseOrderDto"));
         } catch (HttpClientErrorException e){
             log.error("", e);
-
-            if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
-                throw new ClientException(ErrorCode.PRODUCT_ID_ALREADY_EXISTS, "ProductId Already Exists");
+            log.error(e.getMessage());
+            System.out.println(ErrorCode.PRODUCT_ID_ALREADY_EXISTS.getMessage());
+            if(e.getMessage().contains(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
+                System.out.println("!!!!");
+            }
+            if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getMessage().contains(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
+                throw new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "ProductId Not Exists");
             }
             throw new ServerException(
                     ErrorCode.INTERNAL_SERVER_ERROR.getCode()
