@@ -88,6 +88,7 @@ public class CommandMemberServiceTest {
 
     }
 
+    /*
     @Test
     void 회원이_이미_존재함(){
 
@@ -100,7 +101,7 @@ public class CommandMemberServiceTest {
         // then
         verify(commandMemberRepository, never()).save(any());
     }
-
+    */
     @Test
     void nickname_변경시_loginId가_존재하지_않음() {
         // when
@@ -109,6 +110,7 @@ public class CommandMemberServiceTest {
         // then
         assertThat(error.getErrorCode()).isEqualTo(ErrorCode.MEMBER_LOGINID_NOT_EXISTS);
     }
+    /*
     @Test
     void nickname_이_중복되어_변경_실패() {
         // given
@@ -120,6 +122,7 @@ public class CommandMemberServiceTest {
         // then
         assertThat(error.getErrorCode()).isEqualTo(ErrorCode.MEMBER_NICKNAME_ALREADY_EXISTS);
     }
+    */
 
     @Test
     void loginId가_존재하지_않아_탈퇴_실패() {

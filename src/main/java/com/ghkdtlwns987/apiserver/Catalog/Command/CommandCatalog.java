@@ -57,10 +57,10 @@ public class CommandCatalog {
                     jsonResponse,
                     ResultResponse.class
             );
-            Object data = resultResponse.getData();
-            return Optional.ofNullable(data)
+
+            return Optional.ofNullable(resultResponse.getData())
                     .map(d -> objectMapper.convertValue(d, ResponseCatalogDto.class))
-                    .orElseThrow(() -> new RuntimeException("Failed to map JSON response to ResponseOrderDto"));
+                    .orElseThrow(() -> new RuntimeException("Failed to map JSON response"));
         } catch (HttpClientErrorException e){
             log.error("", e);
 
