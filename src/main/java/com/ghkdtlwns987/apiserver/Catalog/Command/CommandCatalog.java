@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Catalog.Config.CatalogConfig;
 import com.ghkdtlwns987.apiserver.Catalog.Dto.RequestCatalogDto;
 import com.ghkdtlwns987.apiserver.Catalog.Dto.ResponseCatalogDto;
-import com.ghkdtlwns987.apiserver.Global.Dto.ResponseDto;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
@@ -20,7 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.rmi.ServerException;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j

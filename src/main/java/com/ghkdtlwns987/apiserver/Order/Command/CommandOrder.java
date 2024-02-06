@@ -66,11 +66,11 @@ public class CommandOrder {
             log.error("", e);
             log.error(e.getMessage());
             System.out.println(ErrorCode.PRODUCT_ID_ALREADY_EXISTS.getMessage());
-            if(e.getMessage().contains(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
-                System.out.println("!!!!");
-            }
             if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getMessage().contains(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
                 throw new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "ProductId Not Exists");
+            }
+            if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getMessage().contains(ErrorCode.NO_QUANTITY.getMessage())){
+                throw new ClientException(ErrorCode.NO_QUANTITY, "No Quantity");
             }
             throw new ServerException(
                     ErrorCode.INTERNAL_SERVER_ERROR.getCode()

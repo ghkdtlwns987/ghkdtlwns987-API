@@ -4,20 +4,14 @@ import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Dto.*;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberAlreadyExistsException;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdAlreadyExistsException;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdNotExistsException;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberNicknameAlreadyExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Member.Repository.CommandMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Repository.QueryMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Service.Impl.CommandMemberServiceImpl;
 
 import com.ghkdtlwns987.apiserver.Member.Service.Impl.QueryMemberServiceImpl;
-import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import jakarta.persistence.EntityListeners;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -25,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
