@@ -2,6 +2,7 @@ package com.ghkdtlwns987.apiserver.Order.Command;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultListResponse;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
@@ -62,23 +63,25 @@ public class CommandOrder {
             return Optional.ofNullable(data)
                     .map(d -> objectMapper.convertValue(d, ResponseOrderDto.class))
                     .orElseThrow(() -> new RuntimeException("Failed to map JSON response to ResponseOrderDto"));
-        } catch (HttpClientErrorException e){
-            log.error("", e);
+        }
+        catch (HttpClientErrorException e){
             log.error(e.getMessage());
-            System.out.println(ErrorCode.PRODUCT_ID_ALREADY_EXISTS.getMessage());
-            if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getMessage().contains(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
-                throw new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "ProductId Not Exists");
-            }
-            if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getMessage().contains(ErrorCode.NO_QUANTITY.getMessage())){
-                throw new ClientException(ErrorCode.NO_QUANTITY, "No Quantity");
+            if(e.getStatusCode().equals(HttpStatus.BAD_REQUEST)){
+                if(e.getMessage().equals(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
+                    throw new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "존재하지 않는 ProductId 입니다.");
+                }
+                if(e.getMessage().equals(ErrorCode.OUT_OF_STOCK.getMessage())){
+                    throw new ClientException(ErrorCode.OUT_OF_STOCK, "재고가 모두 소진되었습니다.");
+                }
             }
             throw new ServerException(
                     ErrorCode.INTERNAL_SERVER_ERROR.getCode()
             );
         }
-        catch (JsonProcessingException e) {
-            log.error("Error processing JSON response", e);
-            return null;
+        catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

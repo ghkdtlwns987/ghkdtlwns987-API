@@ -137,6 +137,14 @@
     - QueryOrderService
     - CommandOrderService
 
+(2024/02/12)
+- API 서버
+  - 서비스간 통신 및 개수 변경 사항 수정 적용
+  - 재고 없을 시 Order 서비스에서 `OUT OF STOCK` 메시지 반환, 하지만 서버에서 `INTERNAL SERVER ERROR` 발생 -> 수정해야 함.
+- Order 서버
+  - 서비스 수정사항 적용
+  - 비즈니스 요구사항에 따른 수정 배포
+
 + 추가해야 할 점
   - 예외처리(O)
   - Order 프로젝트 Entity 수정
