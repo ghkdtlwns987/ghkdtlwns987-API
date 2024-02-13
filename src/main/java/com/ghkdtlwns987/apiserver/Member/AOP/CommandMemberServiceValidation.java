@@ -2,16 +2,12 @@ package com.ghkdtlwns987.apiserver.Member.AOP;
 
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Dto.MemberCreateRequestDto;
-import com.ghkdtlwns987.apiserver.Member.Entity.Member;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.*;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Member.Repository.QueryMemberRepository;
-import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Aspect

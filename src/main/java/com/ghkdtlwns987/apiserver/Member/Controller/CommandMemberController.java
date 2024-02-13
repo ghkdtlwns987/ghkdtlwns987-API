@@ -91,7 +91,7 @@ public class CommandMemberController {
 
             throw new ClientException(
                     ErrorCode.BAD_REQUEST,
-                    "Validation Error in Member Request",
+                    "유효하지 않는 요청입니다.",
                     errorMessages.toString()
             );
         }
