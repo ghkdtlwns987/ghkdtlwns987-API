@@ -9,11 +9,13 @@ import com.ghkdtlwns987.apiserver.Order.Service.Inter.QueryOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.rmi.ServerException;
 import java.util.List;
 
 @Service
+@Transactional
 @Slf4j
 @RequiredArgsConstructor
 public class CommandOrderServiceImpl implements CommandOrderService {
