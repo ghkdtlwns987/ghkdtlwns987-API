@@ -1,6 +1,5 @@
 package com.ghkdtlwns987.apiserver.Catalog;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Catalog.Command.CommandCatalog;
 import com.ghkdtlwns987.apiserver.Catalog.Config.CatalogConfig;
@@ -35,9 +34,6 @@ class CommandCatalogTest {
     @Mock
     private RestTemplate restTemplate;
 
-    @Mock
-    private ObjectMapper objectMapper;
-
     @InjectMocks
     private CommandCatalog commandCatalog;
 
@@ -67,6 +63,6 @@ class CommandCatalogTest {
         // when then
         ClientException exception = assertThrows(ClientException.class, () -> commandCatalog.createCatalogRequest(requestCatalogDto));
         assertEquals(ErrorCode.PRODUCT_ID_ALREADY_EXISTS, exception.getErrorCode());
-        assertEquals("ProductId Already Exists", exception.getMessage());
+        assertEquals("ProductId 가 이미 존재합니다.", exception.getMessage());
     }
 }

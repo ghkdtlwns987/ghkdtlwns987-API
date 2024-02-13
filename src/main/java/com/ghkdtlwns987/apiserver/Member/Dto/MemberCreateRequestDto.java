@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MemberCreateRequestDto {
     @NotBlank
-    @Size(min = 8, max = 15)
+    //@Size(min = 8, max = 15, message = "영문 또는 숫자로 8자 이상 15자 이하만 가능 합니다")
     @Pattern(regexp = "^[a-zA-Z0-9]{8,15}$", message = "영문 또는 숫자로 8자 이상 15자 이하만 가능 합니다")
     private String loginId;
 
@@ -32,7 +32,7 @@ public class MemberCreateRequestDto {
     @NotBlank
     private String email;
 
-    @Size(min = 2, max = 15)
+    //@Size(min = 2, max = 15)
     @Pattern(regexp = "^[가-힣ㄱ-ㅎa-zA-Z0-9._-]{2,15}$",
             message = "숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.")
     private String nickname;
@@ -42,7 +42,7 @@ public class MemberCreateRequestDto {
     private String username;
 
     @NotBlank
-    @Size(min = 11, max = 11, message = "휴대폰 번호는 '-'를 제외하여 입력하세요.")
+    @Size(min = 11, max = 11, message = "휴대폰 번호는 '-'를 제외해 11글자 입력하세요.")
     private String phone;
 
     public Member toEntity(){

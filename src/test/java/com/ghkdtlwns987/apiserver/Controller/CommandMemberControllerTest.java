@@ -6,11 +6,9 @@ import com.ghkdtlwns987.apiserver.Member.Dto.*;
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.MemberLoginIdNotExistsException;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Member.Repository.QueryMemberRepository;
 import com.ghkdtlwns987.apiserver.Member.Service.Inter.CommandMemberService;
-import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -105,8 +103,7 @@ public class CommandMemberControllerTest {
     }
 
     @Test
-    @DisplayName("멤버등록실패 - loginId가 8자 이하인 경우")
-    void 멤버등록실패_loginId가_8자_이하인_경우() throws Exception{
+    void 멤버등록실패_loginId가_7자_이하인_경우() throws Exception{
         final String badLoginId = "loginId";
 
         MemberCreateRequestDto request = MemberCreateRequestDto.builder()
@@ -129,14 +126,14 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[영문 또는 숫자로 8자 이상 15자 이하만 가능 합니다]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).signup(any());
     }
 
     @Test
-    @DisplayName("멤버등록실패 - loginId가 16자 이인 경우")
+    @DisplayName("멤버등록실패 - loginId가 16자 이상인 경우")
     void 멤버등록실패_loginId가_16자_이상인_경우() throws Exception{
         final String badLoginId = "asdfghjjkl123456";
 
@@ -150,7 +147,8 @@ public class CommandMemberControllerTest {
                 .build();
 
 
-        when(commandMemberService.signup(any())).thenReturn(memberCreateResponse);
+        //when(commandMemberService.signup(any())).thenReturn(memberCreateResponse);
+        when(commandMemberService.signup(any())).thenThrow(new ClientException(ErrorCode.BAD_REQUEST, "유효하지 않는 요청입니다."));
 
         //when
         ResultActions perform = mockMvc.perform(post("/api/v1/member")
@@ -160,14 +158,13 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[영문 또는 숫자로 8자 이상 15자 이하만 가능 합니다]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).signup(any());
     }
 
     @Test
-    @DisplayName("멤버등록실패 - loginId가 16자 이인 경우")
     void 멤버등록실패_password가_8자_이하인경우() throws Exception{
         final String badPassword = "badpw";
 
@@ -191,7 +188,7 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[비밀번호는 최소 8자 이상으로 입력해야 합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).signup(any());
@@ -222,7 +219,7 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).signup(any());
@@ -252,7 +249,7 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).signup(any());
@@ -283,7 +280,7 @@ public class CommandMemberControllerTest {
 
         //then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[휴대폰 번호는 '-'를 제외해 11글자 입력하세요.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).signup(any());
@@ -307,8 +304,7 @@ public class CommandMemberControllerTest {
 
         // then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
-                .andExpect(jsonPath("$.errorMessages", equalTo(List.of("[비밀번호는 최소 8자 이상으로 입력해야 합니다.]"))))
+                .andExpect(jsonPath("$.message", equalTo("[비밀번호는 최소 8자 이상으로 입력해야 합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(commandMemberService, times(0)).updatePassword(any(String.class), any(MemberUpdatePasswordRequestDto.class));
@@ -323,7 +319,7 @@ public class CommandMemberControllerTest {
 
         // given
         String request = objectMapper.writeValueAsString(badNickname);
-        when(commandMemberService.updateNickname(loginId, badNickname)).thenReturn(memberUpdateNicknameResponse);
+        when(commandMemberService.updateNickname(any(String.class), any(String.class))).thenReturn(memberUpdateNicknameResponse);
 
         // when
         ResultActions perform = mockMvc.perform(put("/api/v1/member/nickname/" + loginId)
@@ -333,10 +329,10 @@ public class CommandMemberControllerTest {
 
         // then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
+                .andExpect(jsonPath("$.message", equalTo("[숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        verify(commandMemberService, times(0)).updateNickname(loginId, badNickname);
+        verify(commandMemberService, times(0)).updateNickname(any(String.class), any(String.class));
     }
 
     @Test
@@ -345,8 +341,8 @@ public class CommandMemberControllerTest {
         // given
         final String inCorrectLoginId = "incorrect42";
 
-        when(queryMemberRepository.findMemberByLoginId(inCorrectLoginId)).thenThrow(MemberLoginIdNotExistsException.class);
-        when(commandMemberService.witrawalMember(inCorrectLoginId)).thenThrow(new ClientException(ErrorCode.MEMBER_LOGINID_NOT_EXISTS, "MEMBER LOGIN_ID NOT EXISTS"));
+        when(queryMemberRepository.findMemberByLoginId(inCorrectLoginId)).thenThrow(ClientException.class);
+        when(commandMemberService.witrawalMember(inCorrectLoginId)).thenThrow(new ClientException(ErrorCode.MEMBER_LOGINID_NOT_EXISTS, "존재하지 않는 LoginId 입니다."));
 
         // when
         ResultActions perform = mockMvc.perform(delete("/api/v1/member/" + inCorrectLoginId)
@@ -354,7 +350,7 @@ public class CommandMemberControllerTest {
 
         // then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                        .andExpect(jsonPath("$.data", equalTo(null)))
+                        .andExpect(jsonPath("$.message", equalTo("존재하지 않는 LoginId 입니다.")))
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
     }
@@ -372,7 +368,7 @@ public class CommandMemberControllerTest {
                 .phone(phone)
                 .build();
 
-        when(commandMemberService.signup(any())).thenThrow(new ClientException(ErrorCode.MEMBER_NICKNAME_ALREADY_EXISTS, "MEMBER IS ALREADY EXISTS"));
+        when(commandMemberService.signup(any())).thenThrow(new ClientException(ErrorCode.MEMBER_NICKNAME_ALREADY_EXISTS, "이미 가입된 Nickname 입니다."));
 
         //when
         ResultActions perform = mockMvc.perform(post("/api/v1/member")
@@ -381,11 +377,8 @@ public class CommandMemberControllerTest {
         );
         // then
         perform.andDo(print()).andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.data", equalTo(null)))
-                .andExpect(jsonPath("$.errorMessages[0]", equalTo("MEMBER IS ALREADY EXISTS")))
+                .andExpect(jsonPath("$.message", equalTo("이미 가입된 Nickname 입니다.")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-
-        verify(commandMemberService, times(1)).signup(any(MemberCreateRequestDto.class));
     }
 
     @Test

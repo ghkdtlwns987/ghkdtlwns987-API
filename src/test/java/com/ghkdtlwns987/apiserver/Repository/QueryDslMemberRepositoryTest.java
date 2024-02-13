@@ -7,7 +7,6 @@ import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Persistent.QueryDslQueryMemberRepository;
-import com.ghkdtlwns987.apiserver.Member.Repository.CommandMemberRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,9 +35,6 @@ public class QueryDslMemberRepositoryTest extends IntegrationTest {
 
     @Autowired
     QueryDslQueryMemberRepository queryMemberRepository;
-
-    @Autowired
-    CommandMemberRepository commandMemberRepository;
 
     @Autowired
     EntityManager entityManager;
