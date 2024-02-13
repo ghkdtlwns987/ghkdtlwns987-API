@@ -96,13 +96,4 @@ public class CommandMemberController {
             );
         }
     }
-
-    @ExceptionHandler(ClientException.class)
-    public ResponseEntity<ResponseDto<Void>> clientExceptionHandler(ClientException ce) {
-        return ResponseEntity.status(ce.getResponseStatus()).body(ResponseDto.<Void>builder()
-                .success(true)
-                .errorMessages(List.of(ce.getMessage()))
-                .status(ce.getResponseStatus())
-                .build());
-    }
 }
