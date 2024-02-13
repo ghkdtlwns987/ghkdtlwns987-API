@@ -13,6 +13,9 @@ public class RequestOrderDto {
     /* 상품 Id */
     private String productId;
 
+    /* 상품 명 */
+    private String productName;
+
     /* 남은 수량 */
     private Integer qty;
 
