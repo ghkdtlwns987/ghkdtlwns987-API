@@ -1,9 +1,7 @@
 package com.ghkdtlwns987.apiserver.Member.Controller;
 
 import com.ghkdtlwns987.apiserver.Global.Dto.ErrorResponseDto;
-import com.ghkdtlwns987.apiserver.Global.Dto.ResponseDto;
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,35 +11,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
-
-
 @RestControllerAdvice
 @Slf4j
 public class CommandMemberControllerAdvice {
-    /*
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseDto<Object>> handleException(Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                ResponseDto.builder()
-                        .success(false)
-                        .status(HttpStatus.BAD_REQUEST)
-                        .errorMessages(List.of(e.getMessage()))
-                        .build()
-        );
-    }
-    */
     @ExceptionHandler(ClientException.class)
-    public ResponseEntity<ResponseDto<Object>> handleClientException(ClientException e) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponseDto> handleClientException(ClientException e) {
         log.error("[{}] ClientException : {}", e.getResponseStatus(), e.getMessage());
-
-        ResponseDto<Object> response = ResponseDto.builder()
-                .success(false)
-                .status(e.getResponseStatus())
-                .errorMessages(
-                        List.of(e.getErrorCode().getMessage()))
-                .build();
-        return ResponseEntity.status(e.getResponseStatus()).body(response);
+        ErrorResponseDto error = new ErrorResponseDto(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(Exception.class)
@@ -63,26 +41,4 @@ public class CommandMemberControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler({
-            MemberLoginIdNotExistsException.class,
-            MemberNicknameNotExistsException.class,
-    })
-    public ResponseEntity<ErrorResponseDto> handleMemberNotExistsException(Exception ex) {
-        log.error("[BAD_REQUEST] handleMemberNotExistsException", ex);
-        ErrorResponseDto error = new ErrorResponseDto(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
-
-    @ExceptionHandler({
-            MemberEmailAlreadyExistsException.class,
-            MemberLoginIdAlreadyExistsException.class,
-            MemberNicknameAlreadyExistsException.class,
-            MemberAlreadyWithdrawedException.class,
-            MemberPhomeAlreadyExistsException.class,
-    })
-    public ResponseEntity<ErrorResponseDto> handleMemberAlreadyExistsException(Exception ex) {
-        log.error("[BAD_REQUEST] handleMemberAlreadyExistsException", ex);
-        ErrorResponseDto error = new ErrorResponseDto(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
 }

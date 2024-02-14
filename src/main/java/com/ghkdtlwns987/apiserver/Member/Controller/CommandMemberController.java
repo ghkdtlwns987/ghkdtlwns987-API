@@ -89,20 +89,7 @@ public class CommandMemberController {
                 errorMessages.add(error.getDefaultMessage());
             }
 
-            throw new ClientException(
-                    ErrorCode.BAD_REQUEST,
-                    "Validation Error in Member Request",
-                    errorMessages.toString()
-            );
+            throw new ClientException(ErrorCode.BAD_REQUEST, "유효하지 않는 요청입니다.", errorMessages.toString());
         }
-    }
-
-    @ExceptionHandler(ClientException.class)
-    public ResponseEntity<ResponseDto<Void>> clientExceptionHandler(ClientException ce) {
-        return ResponseEntity.status(ce.getResponseStatus()).body(ResponseDto.<Void>builder()
-                .success(true)
-                .errorMessages(List.of(ce.getMessage()))
-                .status(ce.getResponseStatus())
-                .build());
     }
 }

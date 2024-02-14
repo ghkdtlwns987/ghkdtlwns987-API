@@ -2,9 +2,6 @@ package com.ghkdtlwns987.apiserver.Member.AOP;
 
 import com.ghkdtlwns987.apiserver.Member.Dto.MemberCreateRequestDto;
 import com.ghkdtlwns987.apiserver.Member.Dto.MemberUpdatePasswordRequestDto;
-import com.ghkdtlwns987.apiserver.Member.Entity.Member;
-import com.ghkdtlwns987.apiserver.Member.Exception.Class.*;
-import com.ghkdtlwns987.apiserver.Member.Service.Inter.QueryMemberService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

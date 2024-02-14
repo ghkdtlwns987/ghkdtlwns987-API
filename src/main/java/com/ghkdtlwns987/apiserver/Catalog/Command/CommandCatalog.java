@@ -63,7 +63,7 @@ public class CommandCatalog {
             log.error("", e);
 
             if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
-                throw new ClientException(ErrorCode.PRODUCT_ID_ALREADY_EXISTS, "ProductId Already Exists");
+                throw new ClientException(ErrorCode.PRODUCT_ID_ALREADY_EXISTS, "ProductId 가 이미 존재합니다.");
             }
             throw new ServerException(
                     ErrorCode.INTERNAL_SERVER_ERROR.getCode()

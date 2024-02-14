@@ -67,16 +67,14 @@ public class CommandOrder {
         catch (HttpClientErrorException e){
             log.error(e.getMessage());
             if(e.getStatusCode().equals(HttpStatus.BAD_REQUEST)){
-                if(e.getMessage().equals(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
+                if(e.getMessage().contains(ErrorCode.PRODUCT_ID_NOT_EXISTS.getMessage())){
                     throw new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "존재하지 않는 ProductId 입니다.");
                 }
-                if(e.getMessage().equals(ErrorCode.OUT_OF_STOCK.getMessage())){
+                if(e.getMessage().contains(ErrorCode.OUT_OF_STOCK.getMessage())){
                     throw new ClientException(ErrorCode.OUT_OF_STOCK, "재고가 모두 소진되었습니다.");
                 }
             }
-            throw new ServerException(
-                    ErrorCode.INTERNAL_SERVER_ERROR.getCode()
-            );
+            throw new ClientException(ErrorCode.INTERNAL_SERVER_ERROR, "Internal Server Error");
         }
         catch (JsonMappingException e) {
             throw new RuntimeException(e);
