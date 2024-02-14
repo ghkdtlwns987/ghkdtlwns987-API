@@ -3,6 +3,9 @@ AUTHENTICATION: http://localhost:8000/authentication
 AUTHORIZATION: http://localhost:8000/authorization
 ORDER: http://localhost:8002/api/v1
 CATALOG: http://localhost:8001/api/v1
+REDIS_PORT: 6379
+REDIS_HOST: 127.0.0.1
+
 server:
   port: ${SERVER_PORT}
 
@@ -36,6 +39,12 @@ spring:
     format_sql: true
     show-sql: true
     defer-datasource-initialization: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
 
 auth:
   authentication:

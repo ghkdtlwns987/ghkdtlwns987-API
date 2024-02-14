@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -51,10 +52,12 @@ public class Member {
 
     @Column(name = "createAt", nullable = false, updatable = false)
     @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime createAt;
 
-    @Column(name = "modifiedAt", nullable = false)
+    @Column(name = "modifiedAt")
     @UpdateTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime updateAt;
 
 
@@ -78,6 +81,7 @@ public class Member {
 
     public void updateMemberPassword(String newPassword){
         this.password = newPassword;
+
     }
 
     public void withdrawMember() {
