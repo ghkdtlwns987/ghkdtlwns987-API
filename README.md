@@ -213,7 +213,16 @@ void $1$ throws Exception{
 - 모든 클래스에 Exception을 정의하지 않아도 됨.
 - AssertThat() 으로 모든 필드를 비교하기 보다는 assertAll 과 같은 함수를 사용하는게 가독성에 도음이 되며 코드가 간결해짐
 
-
+### Redis Query(Postman)
+```shell
+curl -X POST \
+  http://localhost:8000/api/v1/redis/create \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "key": "key",
+    "value": "value"
+  }'
+```
 # 환경 설정
 ### Prod
 ![img.png](img.png)
