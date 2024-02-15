@@ -20,22 +20,21 @@ public class CartController {
     // RedisTTL은 60초로 고정
     private static final Duration TTL = Duration.ofMillis(60000);
     @PostMapping("/create")
-    public ResponseEntity saveData(@RequestBody CartDto request) throws Exception{
+    public ResponseEntity saveData(@RequestBody CartDto request) {
         redisService.setValues(request.getUserId(), request, TTL);
         ResultResponse result = ResultResponse.of(ResultCode.CART_CREATE_SUCCESS, "데이터가 생성되었습니다.");
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
 
     @GetMapping("/get")
-    public ResponseEntity getData(@RequestParam String key) throws Exception{
+    public ResponseEntity getData(@RequestParam String key){
         String data = redisService.getValues(key);
         ResultResponse result = ResultResponse.of(ResultCode.CART_LOAD_SUCCESS, data);
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
 
     @PutMapping("/update")
-    public ResponseEntity update(@RequestBody CartDto request) throws Exception{
-        String updateValue = "updateValue";
+    public ResponseEntity update(@RequestBody CartDto request) {
         redisService.setValues(request.getUserId(), request, TTL);
         ResultResponse result = ResultResponse.of(ResultCode.CART_UPDATE_SUCCESS, "Redis Key가 업데이트 됬습니다.");
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));

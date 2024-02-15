@@ -33,6 +33,12 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void setValues(String key, String value, Duration ttl) {
+        ValueOperations<String, Object> values = redisTemplate.opsForValue();
+        values.set(key, value, ttl);
+    }
+
+    @Override
     public void setValues(String key, CartDto value, Duration ttl) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
         values.set(key, value, ttl);

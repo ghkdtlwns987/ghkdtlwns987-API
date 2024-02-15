@@ -19,6 +19,14 @@ public interface RedisService {
      * @param value
      * @param ttl
      */
+    void setValues(String key, String value, Duration ttl);
+
+    /**
+     * redis CartDto를 에 key : value 형태로 데이터를 저장하며 TTl을 지정합니다.
+     * @param key
+     * @param value
+     * @param ttl
+     */
     void setValues(String key, CartDto value, Duration ttl);
 
     /**
