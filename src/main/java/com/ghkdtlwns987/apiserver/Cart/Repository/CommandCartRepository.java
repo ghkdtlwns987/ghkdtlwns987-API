@@ -6,7 +6,7 @@ public interface CommandCartRepository {
     /**
      * 장바구니에 요소를 저장합니다.
      * @param cart
-     * @return Cart
+     * @return CartDto
      */
     Cart save(Cart cart);
 
@@ -15,11 +15,4 @@ public interface CommandCartRepository {
      * @param cart
      */
     void delete(Cart cart);
-
-    /**
-     * 장바구니에 담긴 요소를 수정합니다.
-     * @param cart
-     * @return Cart
-     */
-    Cart update(Cart cart);
 }

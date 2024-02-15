@@ -1,6 +1,7 @@
 package com.ghkdtlwns987.apiserver.Cart.Dto;
 
 import lombok.*;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Cart {
+@RedisHash("cart")
+public class CartDto {
     private String userId;
     private List<Catalog> carts = new ArrayList<>();
 
@@ -18,7 +20,6 @@ public class Cart {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Catalog{
-        private Long Id;
         private String name;
         private String description;
         private List<Catalogs> catalogs = new ArrayList<>();
@@ -35,19 +36,4 @@ public class Cart {
         private Integer qty;
         private Integer unitPrice;
     }
-
-
-    /*
-    public static Cart fromEntity(com.ghkdtlwns987.apiserver.Cart.Entity.Cart cart){
-        return new Cart(
-                cart.getId(),
-                cart.getProductId(),
-                cart.getProductName(),
-                cart.getQty(),
-                cart.getUnitPrice(),
-                cart.getMember()
-        );
-    }
-
-     */
 }

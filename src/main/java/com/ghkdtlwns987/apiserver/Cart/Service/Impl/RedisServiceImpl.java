@@ -1,5 +1,6 @@
 package com.ghkdtlwns987.apiserver.Cart.Service.Impl;
 
+import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
 import com.ghkdtlwns987.apiserver.Cart.Service.Inter.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void setValues(String key, String value, Duration ttl) {
+    public void setValues(String key, CartDto value, Duration ttl) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
         values.set(key, value, ttl);
     }

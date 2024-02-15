@@ -229,3 +229,32 @@ curl -X POST \
 
 ### Dev
 ![img.png](img.png)
+
+# Redis 요청 예시
+```json
+{
+    "userId": "7721e64d-c600-4e30-9f22-cdc3262eebde",
+    "carts": [
+        {
+            "name": "cartname",
+            "description": "testcart",
+            "catalogs": [
+                {
+                    "productId": 1001,
+                    "productName": "procud1",
+                    "qty": 3, // 수정할 내용
+                    "unitPrice": 5000
+                }
+            ],
+            "catalogs": [
+                {
+                    "productId": 1002,
+                    "productName": "procud2",
+                    "qty": 3, // 수정할 내용
+                    "unitPrice": 5000
+                }
+            ]
+        }
+    ]
+}
+```

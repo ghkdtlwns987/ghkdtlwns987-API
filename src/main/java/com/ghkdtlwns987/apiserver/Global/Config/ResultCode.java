@@ -34,6 +34,12 @@ public enum ResultCode {
     CREATE_CATALOG_REQUEST_SUCCESS(200, "C001", "상품 등록이 완료되었습니다."),
     GET_ALL_CATALOG_REQUEST_SUCCESS(200, "C001", "전체 상품 조회가 완료되었습니다."),
     GET_CATALOG_REQUEST_SUCCESS(200, "C001", "상품 조회가 완료되었습니다."),
+
+    // CartDto
+    CART_CREATE_SUCCESS(200, "R001", "장바구니 등록 요청이 완료되었습니다."),
+    CART_LOAD_SUCCESS(200, "R002", "장바구니에서 값을 가져오는데 성공했습니다."),
+    CART_UPDATE_SUCCESS(200, "R003", "장바구니 수정이 완료되었습니다."),
+    CART_DELETE_SUCCESS(200, "R004", "장바구니 삭제가 완료되었습니다.")
     ;
     private int status;
     private final String code;

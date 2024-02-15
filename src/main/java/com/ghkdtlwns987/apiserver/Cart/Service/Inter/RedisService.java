@@ -1,5 +1,7 @@
 package com.ghkdtlwns987.apiserver.Cart.Service.Inter;
 
+import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
+
 import java.time.Duration;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ public interface RedisService {
      * @param value
      * @param ttl
      */
-    void setValues(String key, String value, Duration ttl);
+    void setValues(String key, CartDto value, Duration ttl);
 
     /**
      * Redis에 key값을 통해 값을 가져옵니다.
