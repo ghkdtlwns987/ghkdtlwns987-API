@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 public class RedisServiceImpl implements RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
 
-
     @Override
     public void setValues(String key, String value) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
