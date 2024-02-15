@@ -9,7 +9,7 @@ public interface RedisService {
      * @param key
      * @param value
      */
-    public void setValues(String key, String value);
+    void setValues(String key, String value);
 
     /**
      * redis에 key : value 형태로 데이터를 저장하며 TTl을 지정합니다.
@@ -17,7 +17,7 @@ public interface RedisService {
      * @param value
      * @param ttl
      */
-    public void setValues(String key, String value, Duration ttl);
+    void setValues(String key, String value, Duration ttl);
 
     /**
      * Redis에 key값을 통해 값을 가져옵니다.
@@ -25,46 +25,46 @@ public interface RedisService {
      * @param Key
      * @return String
      */
-    public String getValues(String Key);
+    String getValues(String Key);
 
     /**
      * Redis에 저장된 값을 삭제합니다.
      * @param key
      */
-    public void deleteValues(String key);
+    void deleteValues(String key);
 
     /**
      * Redis 만료시간을 key를 기반으로 ttl을 지정합니다.
      * @param key
      * @param ttl
      */
-    public void expireValues(String key, int ttl);
+    void expireValues(String key, int ttl);
 
     /**
      * Redis 에 저장하는 데이터를 Hash형태로 저장합니다.
      * @param key
      * @param data
      */
-    public void setHashOps(String key, Map<String, String> data);
+    void setHashOps(String key, Map<String, String> data);
 
     /**
      * Redis 에 Hash 형태로 저장된 값을 가져옵니다.
      * @param key
      * @param key, hashKey
      */
-    public String getHashOps(String key, String hashKey);
+    String getHashOps(String key, String hashKey);
 
     /**
      * Redis 에 저장된 값을 삭제합니다.
      * @param key
      * @param hashKey
      */
-    public void deleteHashOps(String key, String hashKey);
+    void deleteHashOps(String key, String hashKey);
 
     /**
      * Redis 에 해당 데이터가 존재하는지 확인합니다.
      * @param value
      * @return
      */
-    public boolean checkExistsValue(String value);
+    boolean checkExistsValue(String value);
 }
