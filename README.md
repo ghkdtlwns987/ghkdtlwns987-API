@@ -230,7 +230,7 @@ curl -X POST \
 ### Dev
 ![img.png](img.png)
 
-# Redis 요청 예시
+# Redis 요청 예시(장바구니 생성)
 ```json
 {
     "userId": "7721e64d-c600-4e30-9f22-cdc3262eebde",
@@ -257,4 +257,9 @@ curl -X POST \
         }
     ]
 }
+```
+
+# Redis 요청 예시(장바구니 조회)
+```shell
+http://localhost:8000/api/v1/cart/get?key=7721e64d-c600-4e30-9f22-cdc3262eebde
 ```
