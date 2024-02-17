@@ -5,7 +5,7 @@ import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
 import java.time.Duration;
 import java.util.Map;
 
-public interface CartService {
+public interface CommandCartService {
     /**
      * Redis에 key : value 형태로 데이터를 저장하는 방식입니다.
      * @param key
@@ -27,15 +27,7 @@ public interface CartService {
      * @param value
      * @param ttl
      */
-    void setValues(String key, CartDto value, Duration ttl);
-
-    /**
-     * Redis에 key값을 통해 값을 가져옵니다.
-     *
-     * @param Key
-     * @return String
-     */
-    CartDto getValues(String Key);
+    CartDto setValues(String key, CartDto value, Duration ttl);
 
     /**
      * Redis에 저장된 값을 삭제합니다.

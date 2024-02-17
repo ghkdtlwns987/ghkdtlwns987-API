@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Service;
+package com.ghkdtlwns987.apiserver.Member.Service;
 
 import com.ghkdtlwns987.apiserver.Global.Exception.ClientException;
 import com.ghkdtlwns987.apiserver.Member.Dto.*;

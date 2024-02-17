@@ -1,23 +1,21 @@
 package com.ghkdtlwns987.apiserver.Cart.Service;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryCartService;
 import com.ghkdtlwns987.apiserver.IntegrationTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.awaitility.Awaitility.await;
 
-public class CartServiceTest extends IntegrationTest {
+public class CommandCartServiceTest extends IntegrationTest {
     final Duration TTL = Duration.ofMillis(5000);
 
     private String userId = "7721e64d-c600-4e30-9f22-cdc3262eebde";
@@ -39,7 +37,10 @@ public class CartServiceTest extends IntegrationTest {
     CartDto.Catalog catalog;
 
     @Autowired
-    CartService cartService;
+    CommandCartService commandCartService;
+
+    @Autowired
+    QueryCartService queryCartService;
 
     @BeforeEach
     void shutdown(){
@@ -61,17 +62,17 @@ public class CartServiceTest extends IntegrationTest {
         catalog = new CartDto.Catalog(name, description, catalogsList);
 
         cartDto = new CartDto(userId, List.of(catalog));
-        cartService.setValues(userId, cartDto, TTL);
+        commandCartService.setValues(userId, cartDto, TTL);
     }
 
     @AfterEach
     void tearDown(){
-        cartService.deleteValues(userId);
+        commandCartService.deleteValues(userId);
     }
 
     @Test
     void 장바구니_조회_테스트(){
-        CartDto findValue = cartService.getValues(userId);
+        CartDto findValue = queryCartService.getValues(userId);
         assertThat(findValue)
                 .isNotNull()
                 .extracting(CartDto::getUserId)
@@ -91,17 +92,16 @@ public class CartServiceTest extends IntegrationTest {
 
     @Test
     void 장바구니_요청_테스트(){
-        cartService.setValues(userId, cartDto, TTL);
-        CartDto findValue = cartService.getValues(userId);
+        CartDto cart = commandCartService.setValues(userId, cartDto, TTL);
 
-        assertThat(findValue)
+        assertThat(cart)
                 .isNotNull()
                 .extracting(CartDto::getUserId)
                 .isEqualTo(userId);
-        assertThat(findValue.getCarts().get(0))
+        assertThat(cart.getCarts().get(0))
                 .extracting("name", "description")
                 .containsExactlyInAnyOrder(cartDto.getCarts().get(0).getName(), cartDto.getCarts().get(0).getDescription());
-        assertThat(findValue.getCarts().get(0).getCatalogs().get(0))
+        assertThat(cart.getCarts().get(0).getCatalogs().get(0))
                 .extracting("productId", "productName", "qty", "unitPrice")
                 .containsExactlyInAnyOrder(
                         cartDto.getCarts().get(0).getCatalogs().get(0).getProductId(),
@@ -130,18 +130,16 @@ public class CartServiceTest extends IntegrationTest {
         catalog = new CartDto.Catalog(name, description, catalogsList);
 
         CartDto updateCartDto = new CartDto(userId, List.of(catalog));
-        cartService.setValues(userId, updateCartDto, TTL);
+        CartDto cart = commandCartService.setValues(userId, updateCartDto, TTL);
 
-        CartDto findValue = cartService.getValues(userId);
-
-        assertThat(findValue)
+        assertThat(cart)
                 .isNotNull()
                 .extracting(CartDto::getUserId)
                 .isEqualTo(userId);
-        assertThat(findValue.getCarts().get(0))
+        assertThat(cart.getCarts().get(0))
                 .extracting("name", "description")
                 .containsExactlyInAnyOrder(updateCartDto.getCarts().get(0).getName(), updateCartDto.getCarts().get(0).getDescription());
-        assertThat(findValue.getCarts().get(0).getCatalogs().get(0))
+        assertThat(cart.getCarts().get(0).getCatalogs().get(0))
                 .extracting("productId", "productName", "qty", "unitPrice")
                 .containsExactlyInAnyOrder(
                         updateCartDto.getCarts().get(0).getCatalogs().get(0).getProductId(),
@@ -153,17 +151,17 @@ public class CartServiceTest extends IntegrationTest {
 
     @Test
     void 장바구니_삭제() {
-        cartService.deleteValues(userId);
-        String findValue = String.valueOf(cartService.getValues(userId));
+        commandCartService.deleteValues(userId);
+        String findValue = String.valueOf(queryCartService.getValues(userId));
         assertThat(findValue).isEqualTo("null");
     }
 
     @Test
     void 장바구니_만료_테스() {
-        String findValue = String.valueOf(cartService.getValues(userId));
+        String findValue = String.valueOf(queryCartService.getValues(userId));
         await().pollDelay(Duration.ofMillis(6000)).untilAsserted(
                 () -> {
-                    String expiredValue = String.valueOf(cartService.getValues(userId));
+                    String expiredValue = String.valueOf(queryCartService.getValues(userId));
                     assertThat(expiredValue).isNotEqualTo(findValue);
                     assertThat(expiredValue).isEqualTo("null");
                 }

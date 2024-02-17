@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Security;
+package com.ghkdtlwns987.apiserver.Member.Security;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

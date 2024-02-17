@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Repository;
+package com.ghkdtlwns987.apiserver.Member.Repository;
 
 import com.ghkdtlwns987.apiserver.IntegrationTest;
 import com.ghkdtlwns987.apiserver.Member.Dto.MemberGetInformationResponseDto;

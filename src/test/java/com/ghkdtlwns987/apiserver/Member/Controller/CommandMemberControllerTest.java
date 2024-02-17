@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Controller;
+package com.ghkdtlwns987.apiserver.Member.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Member.Controller.CommandMemberController;
@@ -24,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.equalTo;
