@@ -74,6 +74,8 @@ public class QueryCatalog {
                 .build()
                 .toUri();
 
+        log.info("uri: " + uri);
+
         try {
             ResponseEntity<String> response = restTemplate.exchange(
                     uri,
@@ -82,6 +84,11 @@ public class QueryCatalog {
                     String.class
             );
 
+            // REST 호출로부터 받은 응답이 null인지 확인
+            if (response == null || response.getBody() == null) {
+                throw new ServerException(ErrorCode.INTERNAL_SERVER_ERROR.getCode());
+            }
+
             String jsonResponse = response.getBody();
 
             ResultResponse resultResponse = objectMapper.readValue(
@@ -89,9 +96,7 @@ public class QueryCatalog {
                     ResultResponse.class
             );
 
-            Object data = resultResponse.getData();
-
-            return Optional.ofNullable(data)
+            return Optional.ofNullable(resultResponse.getData())
                     .map(d -> objectMapper.convertValue(d, ResponseCatalogDto.class))
                     .orElseThrow(() -> new RuntimeException("Failed to map JSON response to ResponseCatalogDto"));
         } catch (HttpClientErrorException e){

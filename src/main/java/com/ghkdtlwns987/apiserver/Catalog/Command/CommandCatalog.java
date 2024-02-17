@@ -44,22 +44,20 @@ public class CommandCatalog {
 
 
         try {
-            ResponseEntity<String> responseEntity = restTemplate.exchange(
+            ResponseEntity<ResultResponse> responseEntity = restTemplate.postForEntity(
                     uri,
-                    HttpMethod.POST,
                     requestEntity,
-                    String.class
-            );
-            String jsonResponse = responseEntity.getBody();
-            ResultResponse resultResponse = objectMapper.readValue(
-                    jsonResponse,
                     ResultResponse.class
             );
 
-            return Optional.ofNullable(resultResponse.getData())
-                    .map(d -> objectMapper.convertValue(d, ResponseCatalogDto.class))
-                    .orElseThrow(() -> new RuntimeException("Failed to map JSON response"));
-        } catch (HttpClientErrorException e){
+            ResultResponse resultResponse = responseEntity.getBody();
+
+            if (resultResponse == null || resultResponse.getData() == null) {
+                throw new ServerException(ErrorCode.INTERNAL_SERVER_ERROR.getCode());
+            }
+
+            return objectMapper.convertValue(resultResponse.getData(), ResponseCatalogDto.class);
+        } catch (HttpClientErrorException e) {
             log.error("", e);
 
             if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
@@ -68,10 +66,7 @@ public class CommandCatalog {
             throw new ServerException(
                     ErrorCode.INTERNAL_SERVER_ERROR.getCode()
             );
-        } catch (JsonMappingException e) {
-            throw new RuntimeException(e);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
         }
     }
+
 }

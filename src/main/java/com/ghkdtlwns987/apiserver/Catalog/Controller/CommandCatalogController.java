@@ -27,7 +27,7 @@ public class CommandCatalogController {
         ResultResponse resultResponse = ResultResponse.of(ResultCode.CREATE_CATALOG_REQUEST_SUCCESS, response);
 
         EntityModel<ResultResponse> entityModel = EntityModel.of(resultResponse);
-        entityModel.add(linkTo(QueryCatalogController.class).withSelfRel());
+        entityModel.add(linkTo(CommandCatalogController.class).withSelfRel());
 
         return entityModel;
     }
