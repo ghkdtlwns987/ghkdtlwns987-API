@@ -8,8 +8,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 @RedisHash("cart")
 public class CartDto {
     private String userId;
@@ -31,7 +31,7 @@ public class CartDto {
     @NoArgsConstructor
     @Builder
     public static class Catalogs{
-        private Long productId;
+        private String productId;
         private String productName;
         private Integer qty;
         private Integer unitPrice;

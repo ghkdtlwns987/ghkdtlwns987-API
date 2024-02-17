@@ -1,7 +1,9 @@
 package com.ghkdtlwns987.apiserver.Cart.Service.Impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.RedisService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
@@ -15,16 +17,17 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * RedisService 구현체입니다.
- * 설명은 RedisService.java 에 있습니다.
+ * CartService 구현체입니다.
+ * 설명은 CartService.java 에 있습니다.
  * @author : 황시준
  * @since  : 1.0
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RedisServiceImpl implements RedisService {
+public class CartServiceImpl implements CartService {
     private final RedisTemplate<String, Object> redisTemplate;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void setValues(String key, String value) {
@@ -46,12 +49,20 @@ public class RedisServiceImpl implements RedisService {
 
     @Transactional(readOnly = true)
     @Override
-    public String getValues(String key) {
+    public CartDto getValues(String key) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
         if (values.get(key) == null) {
-            return "false";
+            return null;
         }
-        return (String) values.get(key);
+
+        try {
+            String jsonValue = objectMapper.writeValueAsString(values.get(key));
+            return objectMapper.readValue(jsonValue, CartDto.class);
+        } catch (JsonProcessingException e) {
+            log.error("Json 파싱 에러");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
