@@ -18,6 +18,7 @@ public class ResponseOrderDto {
     private String userId;
     private String orderId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Getter
     private LocalDateTime orderedAt;
 }

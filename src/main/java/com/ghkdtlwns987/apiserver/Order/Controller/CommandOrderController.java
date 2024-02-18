@@ -20,7 +20,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class CommandOrderController {
     private final CommandOrderService commandOrderService;
 
-
     @PostMapping("/orders/{userId}")
     public EntityModel<ResultResponse> createOrders(@PathVariable String userId, @RequestBody RequestOrderDto request) throws ServerException {
         ResponseOrderDto response = commandOrderService.createOrder(userId, request);

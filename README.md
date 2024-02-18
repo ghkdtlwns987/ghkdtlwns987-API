@@ -261,3 +261,11 @@ curl -X POST \
 ```shell
 http://localhost:8000/api/v1/cart/get?key=7721e64d-c600-4e30-9f22-cdc3262eebde
 ```
+
+# 테스트 코드 
+### API Server
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+
+67 + 18 + 26 = 111개
