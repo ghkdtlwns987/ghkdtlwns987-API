@@ -1,9 +1,7 @@
 package com.ghkdtlwns987.apiserver.Cart.Service.Impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
@@ -17,15 +15,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * CommandCartService 구현체입니다.
- * 설명은 CommandCartService.java 에 있습니다.
+ * CommandRedisService 구현체입니다.
+ * 설명은 CommandRedisService.java 에 있습니다.
  * @author : 황시준
  * @since  : 1.0
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CommandCommandCartServiceImpl implements CommandCartService {
+public class CommandRedisServiceImpl implements CommandRedisService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
@@ -74,11 +72,6 @@ public class CommandCommandCartServiceImpl implements CommandCartService {
     public void deleteHashOps(String key, String hashKey) {
         HashOperations<String, Object, Object> values = redisTemplate.opsForHash();
         values.delete(key, hashKey);
-    }
-
-    @Override
-    public boolean checkExistsValue(String value) {
-        return !value.equals("false");
     }
 
 }

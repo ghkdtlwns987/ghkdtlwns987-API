@@ -2,8 +2,8 @@ package com.ghkdtlwns987.apiserver.Cart.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryCartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryRedisService;
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,10 +53,10 @@ public class CommandCartControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    QueryCartService queryCartService;
+    QueryRedisService queryRedisService;
 
     @MockBean
-    CommandCartService commandCartService;
+    CommandRedisService commandRedisService;
     @BeforeEach
     void setUp(){
         catalogs1 = CartDto.Catalogs.builder()
@@ -81,7 +81,7 @@ public class CommandCartControllerTest {
 
     @Test
     void 장바구니_등록_성공() throws Exception {
-        when(commandCartService.setValues(any(String.class), any(CartDto.class), any(Duration.class))).thenReturn(cartDto);
+        when(commandRedisService.setValues(any(String.class), any(CartDto.class), any(Duration.class))).thenReturn(cartDto);
 
         ResultActions perform = mockMvc.perform(post("/api/v1/cart")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -105,7 +105,7 @@ public class CommandCartControllerTest {
                 .andExpect(jsonPath("$.data.carts[0].catalogs[1].unitPrice", equalTo(cartDto.getCarts().get(0).getCatalogs().get(1).getUnitPrice())))
         ;
 
-        verify(commandCartService, times(1)).setValues(any(String.class), any(CartDto.class), any(Duration.class));
+        verify(commandRedisService, times(1)).setValues(any(String.class), any(CartDto.class), any(Duration.class));
     }
 
     /**
@@ -119,7 +119,7 @@ public class CommandCartControllerTest {
      */
     @Test
     void 장바구니_삭제_성공() throws Exception {
-        doNothing().when(commandCartService).deleteValues(any(String.class));
+        doNothing().when(commandRedisService).deleteValues(any(String.class));
 
         ResultActions perform = mockMvc.perform(delete("/api/v1/cart?key=" + userId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -131,7 +131,7 @@ public class CommandCartControllerTest {
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_DELETE_SUCCESS.getMessage())))
                 .andExpect(jsonPath("$.data", equalTo("데이터가 삭제 되었습니다.")));
 
-        verify(commandCartService, times(1)).deleteValues(any(String.class));
+        verify(commandRedisService, times(1)).deleteValues(any(String.class));
     }
 
     @Test
@@ -155,7 +155,7 @@ public class CommandCartControllerTest {
 
         CartDto updateCartDto = new CartDto(userId, List.of(catalog));
 
-        when(commandCartService.setValues(any(String.class), any(CartDto.class), any(Duration.class))).thenReturn(updateCartDto);
+        when(commandRedisService.setValues(any(String.class), any(CartDto.class), any(Duration.class))).thenReturn(updateCartDto);
 
         ResultActions perform = mockMvc.perform(put("/api/v1/cart")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -179,6 +179,6 @@ public class CommandCartControllerTest {
                 .andExpect(jsonPath("$.data.carts[0].catalogs[1].unitPrice", equalTo(updateCartDto.getCarts().get(0).getCatalogs().get(1).getUnitPrice())))
         ;
 
-        verify(commandCartService, times(1)).setValues(any(String.class), any(CartDto.class), any(Duration.class));
+        verify(commandRedisService, times(1)).setValues(any(String.class), any(CartDto.class), any(Duration.class));
     }
 }

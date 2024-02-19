@@ -18,6 +18,10 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @Column(name = "userId", nullable = false)
+    private String userId;
+
+
     @Column(name = "productId", nullable = false)
     private String productId;
 

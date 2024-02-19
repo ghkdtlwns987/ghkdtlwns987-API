@@ -1,5 +1,6 @@
 package com.ghkdtlwns987.apiserver.Cart.Dto;
 
+import com.ghkdtlwns987.apiserver.Cart.Entity.Cart;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -35,5 +36,11 @@ public class CartDto {
         private String productName;
         private Integer qty;
         private Integer unitPrice;
+    }
+
+    Cart toEntity(){
+        return Cart.builder()
+                .
+                .build()
     }
 }

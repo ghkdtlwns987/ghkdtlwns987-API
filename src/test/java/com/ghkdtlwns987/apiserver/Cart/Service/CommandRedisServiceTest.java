@@ -1,8 +1,8 @@
 package com.ghkdtlwns987.apiserver.Cart.Service;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryCartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryRedisService;
 import com.ghkdtlwns987.apiserver.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.awaitility.Awaitility.await;
 
-public class CommandCartServiceTest extends IntegrationTest {
+public class CommandRedisServiceTest extends IntegrationTest {
     final Duration TTL = Duration.ofMillis(5000);
 
     private String userId = "7721e64d-c600-4e30-9f22-cdc3262eebde";
@@ -37,10 +37,10 @@ public class CommandCartServiceTest extends IntegrationTest {
     CartDto.Catalog catalog;
 
     @Autowired
-    CommandCartService commandCartService;
+    CommandRedisService commandRedisService;
 
     @Autowired
-    QueryCartService queryCartService;
+    QueryRedisService queryRedisService;
 
     @BeforeEach
     void shutdown(){
@@ -62,17 +62,17 @@ public class CommandCartServiceTest extends IntegrationTest {
         catalog = new CartDto.Catalog(name, description, catalogsList);
 
         cartDto = new CartDto(userId, List.of(catalog));
-        commandCartService.setValues(userId, cartDto, TTL);
+        commandRedisService.setValues(userId, cartDto, TTL);
     }
 
     @AfterEach
     void tearDown(){
-        commandCartService.deleteValues(userId);
+        commandRedisService.deleteValues(userId);
     }
 
     @Test
     void 장바구니_조회_테스트(){
-        CartDto findValue = queryCartService.getValues(userId);
+        CartDto findValue = queryRedisService.getValues(userId);
         assertThat(findValue)
                 .isNotNull()
                 .extracting(CartDto::getUserId)
@@ -92,7 +92,7 @@ public class CommandCartServiceTest extends IntegrationTest {
 
     @Test
     void 장바구니_요청_테스트(){
-        CartDto cart = commandCartService.setValues(userId, cartDto, TTL);
+        CartDto cart = commandRedisService.setValues(userId, cartDto, TTL);
 
         assertThat(cart)
                 .isNotNull()
@@ -130,7 +130,7 @@ public class CommandCartServiceTest extends IntegrationTest {
         catalog = new CartDto.Catalog(name, description, catalogsList);
 
         CartDto updateCartDto = new CartDto(userId, List.of(catalog));
-        CartDto cart = commandCartService.setValues(userId, updateCartDto, TTL);
+        CartDto cart = commandRedisService.setValues(userId, updateCartDto, TTL);
 
         assertThat(cart)
                 .isNotNull()
@@ -151,17 +151,17 @@ public class CommandCartServiceTest extends IntegrationTest {
 
     @Test
     void 장바구니_삭제() {
-        commandCartService.deleteValues(userId);
-        String findValue = String.valueOf(queryCartService.getValues(userId));
+        commandRedisService.deleteValues(userId);
+        String findValue = String.valueOf(queryRedisService.getValues(userId));
         assertThat(findValue).isEqualTo("null");
     }
 
     @Test
     void 장바구니_만료_테스() {
-        String findValue = String.valueOf(queryCartService.getValues(userId));
+        String findValue = String.valueOf(queryRedisService.getValues(userId));
         await().pollDelay(Duration.ofMillis(6000)).untilAsserted(
                 () -> {
-                    String expiredValue = String.valueOf(queryCartService.getValues(userId));
+                    String expiredValue = String.valueOf(queryRedisService.getValues(userId));
                     assertThat(expiredValue).isNotEqualTo(findValue);
                     assertThat(expiredValue).isEqualTo("null");
                 }

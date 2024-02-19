@@ -2,8 +2,7 @@ package com.ghkdtlwns987.apiserver.Cart.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryCartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryRedisService;
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +52,7 @@ public class QueryCartControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    QueryCartService queryCartService;
+    QueryRedisService queryRedisService;
     @BeforeEach
     void setUp(){
         catalogs1 = CartDto.Catalogs.builder()
@@ -78,7 +77,7 @@ public class QueryCartControllerTest {
 
     @Test
     void 장바구니_조회_실패_존재하지_않는_key() throws Exception {
-        when(queryCartService.getValues(any(String.class))).thenReturn(null);
+        when(queryRedisService.getValues(any(String.class))).thenReturn(null);
 
         ResultActions perform = mockMvc.perform(get("/api/v1/cart/search")
                 .param("key", userId)
@@ -91,11 +90,11 @@ public class QueryCartControllerTest {
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_LOAD_SUCCESS.getMessage())))
                 .andExpect(jsonPath("$.data", equalTo(null)));
 
-        verify(queryCartService, times(1)).getValues(any(String.class));
+        verify(queryRedisService, times(1)).getValues(any(String.class));
     }
     @Test
     void 장바구니_조회_성공() throws Exception {
-        when(queryCartService.getValues(any(String.class))).thenReturn(cartDto);
+        when(queryRedisService.getValues(any(String.class))).thenReturn(cartDto);
 
         ResultActions perform = mockMvc.perform(get("/api/v1/cart/search")
                 .param("key", userId)
@@ -118,7 +117,7 @@ public class QueryCartControllerTest {
                 .andExpect(jsonPath("$.data.carts[0].catalogs[1].qty", equalTo(cartDto.getCarts().get(0).getCatalogs().get(1).getQty())))
                 .andExpect(jsonPath("$.data.carts[0].catalogs[1].unitPrice", equalTo(cartDto.getCarts().get(0).getCatalogs().get(1).getUnitPrice())));
 
-        verify(queryCartService, times(1)).getValues(any(String.class));
+        verify(queryRedisService, times(1)).getValues(any(String.class));
 
     }
 }

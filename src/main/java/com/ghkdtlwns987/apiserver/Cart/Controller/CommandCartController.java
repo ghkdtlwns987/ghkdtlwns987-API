@@ -1,7 +1,7 @@
 package com.ghkdtlwns987.apiserver.Cart.Controller;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,26 +15,26 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class CommandCartController {
-    private final CommandCartService commandCartService;
+    private final CommandRedisService commandRedisService;
 
     // RedisTTL은 60초로 고정
     private static final Duration TTL = Duration.ofMillis(60000);
     @PostMapping("/cart")
     public ResponseEntity saveData(@RequestBody CartDto request) {
-        CartDto response = commandCartService.setValues(request.getUserId(), request, TTL);
+        CartDto response = commandRedisService.setValues(request.getUserId(), request, TTL);
         ResultResponse result = ResultResponse.of(ResultCode.CART_CREATE_SUCCESS, response);
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
 
     @PutMapping("/cart")
     public ResponseEntity update(@RequestBody CartDto request) {
-        CartDto response = commandCartService.setValues(request.getUserId(), request, TTL);
+        CartDto response = commandRedisService.setValues(request.getUserId(), request, TTL);
         ResultResponse result = ResultResponse.of(ResultCode.CART_UPDATE_SUCCESS, response);
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
     @DeleteMapping("/cart")
     public ResponseEntity deleteData(@RequestParam String key){
-        commandCartService.deleteValues(key);
+        commandRedisService.deleteValues(key);
         ResultResponse result = ResultResponse.of(ResultCode.CART_DELETE_SUCCESS, "데이터가 삭제 되었습니다.");
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));
     }
