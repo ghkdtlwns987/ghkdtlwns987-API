@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(QueryCatalogController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class QueryCatalogControllerTest {
+public class QueryProductsControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired

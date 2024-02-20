@@ -11,22 +11,23 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cart")
-public class Cart {
+@Table(name = "products")
+public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "user_id")
-    private String userId;
+    private String name;
+    private String description;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cart_id")
-    private List<Products> products = new ArrayList<>();
+    @JoinColumn(name = "catalog_id")
+    private List<Items> items = new ArrayList<>();
 
     @Builder
-    public Cart (String userId, List<Products> products){
-        this.userId = userId;
-        this.products = products;
+    public Products(String name, String description, List<Items> items){
+        this.name = name;
+        this.description = description;
+        this.items = items;
     }
 }
