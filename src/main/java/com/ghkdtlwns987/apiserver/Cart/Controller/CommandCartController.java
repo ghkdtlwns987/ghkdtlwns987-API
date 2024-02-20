@@ -1,6 +1,7 @@
 package com.ghkdtlwns987.apiserver.Cart.Controller;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
+import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
 import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
 import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import com.ghkdtlwns987.apiserver.Global.Dto.ResultResponse;
@@ -16,11 +17,13 @@ import java.time.Duration;
 @RequestMapping("/api/v1")
 public class CommandCartController {
     private final CommandRedisService commandRedisService;
+    private final CommandCartService commandCartService;
 
     // RedisTTL은 60초로 고정
     private static final Duration TTL = Duration.ofMillis(60000);
     @PostMapping("/cart")
     public ResponseEntity saveData(@RequestBody CartDto request) {
+        commandCartService.saveCartForEntity(request);
         CartDto response = commandRedisService.setValues(request.getUserId(), request, TTL);
         ResultResponse result = ResultResponse.of(ResultCode.CART_CREATE_SUCCESS, response);
         return new ResponseEntity<>(result, HttpStatus.valueOf(result.getStatus()));

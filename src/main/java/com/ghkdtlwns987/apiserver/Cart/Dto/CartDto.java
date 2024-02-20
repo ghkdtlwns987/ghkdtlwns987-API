@@ -56,6 +56,34 @@ public class CartDto {
                 .build();
     }
 
+    public static CartDto fromEntity(Cart cart) {
+        CartDto cartDto = new CartDto();
+        cartDto.setUserId(cart.getUserId());
+
+        List<Catalog> catalogs = cart.getProducts().stream()
+                .map(product -> {
+                    Catalog catalog = new Catalog();
+                    catalog.setName(product.getName());
+                    catalog.setDescription(product.getDescription());
+                    catalog.setCatalogs(
+                            product.getItems().stream()
+                                    .map(item -> {
+                                        Catalogs catalogs1 = new Catalogs();
+                                        catalogs1.setProductId(item.getProductId());
+                                        catalogs1.setProductName(item.getProductName());
+                                        catalogs1.setQty(item.getQty());
+                                        catalogs1.setUnitPrice(item.getUnitPrice());
+                                        return catalogs1;
+                                    })
+                                    .collect(Collectors.toList())
+                    );
+                    return catalog;
+                })
+                .collect(Collectors.toList());
+
+        cartDto.setCarts(catalogs);
+        return cartDto;
+    }
     private List<Items> buildItemsList(List<Catalogs> catalogDtoItemList) {
         return catalogDtoItemList.stream()
                 .map(catalogDtoItem -> Items.builder()

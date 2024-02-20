@@ -17,5 +17,5 @@ public interface CommandCartService {
      * @param value
      * @return
      */
-    CartDto saveCartForEntity(String key, CartDto value);
+    CartDto saveCartForEntity(CartDto value);
 }

@@ -2,6 +2,7 @@ package com.ghkdtlwns987.apiserver.Cart.Service.Impl;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
 import com.ghkdtlwns987.apiserver.Cart.Entity.Cart;
+import com.ghkdtlwns987.apiserver.Cart.Entity.Items;
 import com.ghkdtlwns987.apiserver.Cart.Repository.CommandCartRepository;
 import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
 import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +28,9 @@ public class CommandCartServiceImpl implements CommandCartService {
     }
 
     @Override
-    public CartDto saveCartForEntity(String key, CartDto value) {
-        //return commandCartRepository.save(value);
-        return null;
+    public CartDto saveCartForEntity(CartDto cartDto) {
+        Cart cart = cartDto.toEntity();
+        Cart savedCart = commandCartRepository.save(cart);
+        return CartDto.fromEntity(savedCart);
     }
 }
