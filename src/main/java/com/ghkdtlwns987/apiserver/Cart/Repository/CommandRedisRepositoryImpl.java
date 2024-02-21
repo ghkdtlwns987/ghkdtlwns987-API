@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author : 황시준
  * @since  : 1.0
  */
-@Slf4j
-@Service
+@Repository
 @RequiredArgsConstructor
 public class CommandRedisRepositoryImpl implements CommandRedisRepository {
     private final RedisTemplate<String, Object> redisTemplate;

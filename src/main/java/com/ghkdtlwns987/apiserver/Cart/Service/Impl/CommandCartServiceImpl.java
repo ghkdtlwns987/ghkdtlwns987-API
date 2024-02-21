@@ -9,15 +9,11 @@ import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommandCartServiceImpl implements CommandCartService {
     private final CommandCartRepository commandCartRepository;
-    private final QueryCartRepository queryCartRepository;
-
     @Override
     public CartDto saveCartForEntity(CartDto cartDto) {
         Cart cart = cartDto.toEntity();
