@@ -1,7 +1,6 @@
-package com.ghkdtlwns987.apiserver.Cart.Service.Impl;
+package com.ghkdtlwns987.apiserver.Cart.Repository;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
@@ -15,15 +14,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * CommandRedisService 구현체입니다.
- * 설명은 CommandRedisService.java 에 있습니다.
+ * CommandRedisRepository 구현체입니다.
+ * 설명은 CommandRedisRepository.java 에 있습니다.
  * @author : 황시준
  * @since  : 1.0
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CommandRedisServiceImpl implements CommandRedisService {
+public class CommandRedisRepositoryImpl implements CommandRedisRepository {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override

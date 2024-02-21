@@ -1,7 +1,8 @@
 package com.ghkdtlwns987.apiserver.Cart.Service;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
-import com.ghkdtlwns987.apiserver.Cart.Service.Inter.CommandRedisService;
+import com.ghkdtlwns987.apiserver.Cart.Repository.CommandRedisRepository;
+import com.ghkdtlwns987.apiserver.Cart.Repository.CommandRedisRepositoryImpl;
 import com.ghkdtlwns987.apiserver.Cart.Service.Inter.QueryRedisService;
 import com.ghkdtlwns987.apiserver.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.awaitility.Awaitility.await;
 
-public class CommandRedisServiceTest extends IntegrationTest {
+public class CommandRedisRepositoryTest extends IntegrationTest {
     final Duration TTL = Duration.ofMillis(5000);
 
     private String userId = "7721e64d-c600-4e30-9f22-cdc3262eebde";
@@ -37,7 +38,7 @@ public class CommandRedisServiceTest extends IntegrationTest {
     CartDto.Catalog catalog;
 
     @Autowired
-    CommandRedisService commandRedisService;
+    CommandRedisRepositoryImpl commandRedisRepository;
 
     @Autowired
     QueryRedisService queryRedisService;
@@ -62,12 +63,12 @@ public class CommandRedisServiceTest extends IntegrationTest {
         catalog = new CartDto.Catalog(name, description, catalogsList);
 
         cartDto = new CartDto(userId, List.of(catalog));
-        commandRedisService.setValues(userId, cartDto, TTL);
+        commandRedisRepository.setValues(userId, cartDto, TTL);
     }
 
     @AfterEach
     void tearDown(){
-        commandRedisService.deleteValues(userId);
+        commandRedisRepository.deleteValues(userId);
     }
 
     @Test
@@ -92,7 +93,7 @@ public class CommandRedisServiceTest extends IntegrationTest {
 
     @Test
     void 장바구니_요청_테스트(){
-        CartDto cart = commandRedisService.setValues(userId, cartDto, TTL);
+        CartDto cart = commandRedisRepository.setValues(userId, cartDto, TTL);
 
         assertThat(cart)
                 .isNotNull()
@@ -130,7 +131,7 @@ public class CommandRedisServiceTest extends IntegrationTest {
         catalog = new CartDto.Catalog(name, description, catalogsList);
 
         CartDto updateCartDto = new CartDto(userId, List.of(catalog));
-        CartDto cart = commandRedisService.setValues(userId, updateCartDto, TTL);
+        CartDto cart = commandRedisRepository.setValues(userId, updateCartDto, TTL);
 
         assertThat(cart)
                 .isNotNull()
@@ -151,7 +152,7 @@ public class CommandRedisServiceTest extends IntegrationTest {
 
     @Test
     void 장바구니_삭제() {
-        commandRedisService.deleteValues(userId);
+        commandRedisRepository.deleteValues(userId);
         String findValue = String.valueOf(queryRedisService.getValues(userId));
         assertThat(findValue).isEqualTo("null");
     }

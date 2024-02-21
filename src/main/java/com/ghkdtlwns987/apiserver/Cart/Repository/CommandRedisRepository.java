@@ -1,11 +1,11 @@
-package com.ghkdtlwns987.apiserver.Cart.Service.Inter;
+package com.ghkdtlwns987.apiserver.Cart.Repository;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
 
 import java.time.Duration;
 import java.util.Map;
 
-public interface CommandRedisService {
+public interface CommandRedisRepository {
     /**
      * Redis에 key : value 형태로 데이터를 저장하는 방식입니다.
      * @param key
