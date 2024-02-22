@@ -1,4 +1,4 @@
-package com.ghkdtlwns987.apiserver.Cart.Service;
+package com.ghkdtlwns987.apiserver.Cart.Repository;
 
 import com.ghkdtlwns987.apiserver.Cart.Dto.CartDto;
 import com.ghkdtlwns987.apiserver.Cart.Repository.CommandRedisRepository;
@@ -158,7 +158,7 @@ public class CommandRedisRepositoryTest extends IntegrationTest {
     }
 
     @Test
-    void 장바구니_만료_테스() {
+    void 장바구니_만료_테스트() {
         String findValue = String.valueOf(queryRedisService.getValues(userId));
         await().pollDelay(Duration.ofMillis(6000)).untilAsserted(
                 () -> {
