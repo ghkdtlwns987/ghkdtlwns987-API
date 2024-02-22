@@ -35,7 +35,6 @@ public class CommandMemberRepositoryTest {
     private JpaMemberRepository commandMemberRepository;
 
     @Test
-    @DisplayName("성공 테스트(save) - 멤버 전체 저장")
     void 성공_테스트_회원_등록_성공_save_메소드_호출() {
         Member member = Member.builder()
                 .loginId(loginId)

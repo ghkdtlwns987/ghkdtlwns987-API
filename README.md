@@ -157,6 +157,23 @@
     - Order 서비스에서 주문 개수 만큼 Catalog 서비스의 qty 줄이는 로직 추가
   - 기능 추가
 
+(2024/02/22)
+- API 서버
+  - 장바구니 기능 추가
+    - Redis 연동 및 Look Ascide + Write Around 패턴 적용
+    - 잦ㅇ바구니 조회 시 만약 key 가 만료되어있으면 DB로부터 데이터를 읽어오고 캐시에 저정
+  - 예외처리 로직 수정
+    - 응답 코드 수정, 서비스간 응답 메시지 수정, 예외처리
+  - 테스트코드 추가 작성
+    - Redis 테스트코드 및 장바구니 테스트코드 작성
+  - 해야할 것
+    - 테스트코드 추가
+    - 만약 서비스가 존재하지 않는 에러(Connection Refused)는 어떻게 처리해야 하는지 확인해 보아야 함.
+    - 장바구니 기능 개선
+    - 서비스 인프라 도식도 작성
+    - 등등...
+
+
 ### 의문점
 Q1. `@DataJpaTest와 직접 Mock객체를 주입받는 방식 vs MockitoAnnotations.openMocks(this) 로 객체를 생성하는 방식?;`
 A1. `@EntitiyManager`, `@JpaQueryFactory` 를 생성하고 주입받는 `TestConfig.java` 작성, 하지만 그래도 `Bean`이 등록되지 않아 우선 `@SpringBootTest`로 테스트 진행한다.
@@ -267,5 +284,3 @@ http://localhost:8000/api/v1/cart/get?key=7721e64d-c600-4e30-9f22-cdc3262eebde
 ![img_2.png](img_2.png)
 ![img_3.png](img_3.png)
 ![img_4.png](img_4.png)
-
-67 + 18 + 26 = 111개
