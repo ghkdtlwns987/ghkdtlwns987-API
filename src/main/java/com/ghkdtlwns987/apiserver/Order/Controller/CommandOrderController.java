@@ -15,7 +15,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
 public class CommandOrderController {
     private final CommandOrderService commandOrderService;

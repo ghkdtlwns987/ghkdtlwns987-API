@@ -86,7 +86,7 @@ public class QueryProductsControllerTest {
                 new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "존재하지 않는 ProductId 입니다.")
         );
 
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/catalog/Id/CATALOG-0001231")
+        ResultActions perform = mockMvc.perform(get("/api/v1/catalog/Id/CATALOG-0001231")
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -114,7 +114,7 @@ public class QueryProductsControllerTest {
         when(queryCatalogService.getCatalogsByProductName(any(String.class)))
                 .thenReturn(Collections.emptyList());
 
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/catalog/Berlin3")
+        ResultActions perform = mockMvc.perform(get("/api/v1/catalog/Berlin3")
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -130,14 +130,14 @@ public class QueryProductsControllerTest {
     void 전체상품_조회_상품이_존재하지_않는_경우() throws Exception{
         when(queryCatalogService.getAllCatalogs()).thenReturn(Collections.emptyList());
 
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/catalog/catalogs")
+        ResultActions perform = mockMvc.perform(get("/api/v1/catalog/catalogs")
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
         perform.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
-                .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
+                .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS.getMessage())))
                 .andExpect(jsonPath("$.data", equalTo(Collections.emptyList())));
     }
     /**
@@ -162,7 +162,7 @@ public class QueryProductsControllerTest {
     @Test
     void productId로_조회_성공() throws Exception{
         when(queryCatalogService.getCatalogsByProductId(any(String.class))).thenReturn(responseCatalogDto);
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/catalog/Id/CATALOG-0001")
+        ResultActions perform = mockMvc.perform(get("/api/v1/catalog/Id/CATALOG-0001")
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -206,7 +206,7 @@ public class QueryProductsControllerTest {
     @Test
     void productName으로_조회_성공() throws Exception{
         when(queryCatalogService.getCatalogsByProductName(any(String.class))).thenReturn(responseCatalogDtoList);
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/catalog/Berlin")
+        ResultActions perform = mockMvc.perform(get("/api/v1/catalog/Berlin")
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -227,7 +227,7 @@ public class QueryProductsControllerTest {
     @Test
     void 전체_상품_조회() throws Exception{
         when(queryCatalogService.getAllCatalogs()).thenReturn(responseCatalogDtoList);
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/catalogs")
+        ResultActions perform = mockMvc.perform(get("/api/v1/catalog/catalogs")
                 .contentType(MediaType.APPLICATION_JSON)
         );
 

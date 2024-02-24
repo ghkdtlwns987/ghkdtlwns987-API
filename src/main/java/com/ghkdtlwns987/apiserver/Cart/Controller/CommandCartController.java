@@ -15,7 +15,7 @@ import java.time.Duration;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/cart")
 public class CommandCartController {
     private final CommandRedisService commandRedisService;
     private final CommandCartService commandCartService;

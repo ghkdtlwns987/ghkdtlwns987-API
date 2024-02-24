@@ -91,7 +91,7 @@ public class CommandCartControllerTest {
         when(commandCartService.saveCartForEntity(any(CartDto.class))).thenReturn(cartDto);
         when(commandRedisService.saveCartForCache(any(String.class), any(CartDto.class))).thenReturn(cartDto);
 
-        ResultActions perform = mockMvc.perform(post("/api/v1/cart")
+        ResultActions perform = mockMvc.perform(post("/api/v1/cart/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(cartDto))
         );
@@ -131,7 +131,7 @@ public class CommandCartControllerTest {
     void 장바구니_삭제_성공() throws Exception {
         doNothing().when(commandRedisService).deleteCartForCache(any(String.class));
 
-        ResultActions perform = mockMvc.perform(delete("/api/v1/cart?key=" + userId)
+        ResultActions perform = mockMvc.perform(delete("/api/v1/cart/cart?key=" + userId)
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -167,7 +167,7 @@ public class CommandCartControllerTest {
 
         when(commandRedisService.saveCartForCache(any(String.class), any(CartDto.class))).thenReturn(updateCartDto);
 
-        ResultActions perform = mockMvc.perform(put("/api/v1/cart")
+        ResultActions perform = mockMvc.perform(put("/api/v1/cart/cart")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updateCartDto))
         );

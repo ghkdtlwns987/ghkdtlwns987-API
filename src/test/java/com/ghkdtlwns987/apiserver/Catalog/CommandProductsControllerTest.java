@@ -66,7 +66,7 @@ public class CommandProductsControllerTest {
         when(commandCatalog.createCatalogRequest(any(RequestCatalogDto.class))).thenThrow(
             new ClientException(ErrorCode.PRODUCT_ID_ALREADY_EXISTS, ErrorCode.PRODUCT_ID_ALREADY_EXISTS.getMessage()));
 
-        ResultActions perform = mockMvc.perform(post("/api/v1/member/catalog")
+        ResultActions perform = mockMvc.perform(post("/api/v1/catalog/catalog")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestCatalogDto))
         );
@@ -98,7 +98,7 @@ public class CommandProductsControllerTest {
         when(commandCatalog.createCatalogRequest(any(RequestCatalogDto.class))).thenReturn(responseCatalogDto);
 
 
-        ResultActions perform = mockMvc.perform(post("/api/v1/member/catalog")
+        ResultActions perform = mockMvc.perform(post("/api/v1/catalog/catalog")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestCatalogDto))
         );

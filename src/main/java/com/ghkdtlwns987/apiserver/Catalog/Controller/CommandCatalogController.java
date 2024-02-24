@@ -17,7 +17,7 @@ import java.rmi.ServerException;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1/catalog")
 @RequiredArgsConstructor
 public class CommandCatalogController {
     private final CommandCatalog commandCatalog;

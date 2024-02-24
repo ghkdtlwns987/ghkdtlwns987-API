@@ -71,7 +71,7 @@ public class CommandOrderControllerTest {
                 .thenThrow(new ClientException(ErrorCode.OUT_OF_STOCK, "재고가 모두 소진되었습니다."));
 
         // when
-        ResultActions perform = mockMvc.perform(post("/api/v1/member/orders/" + userId)
+        ResultActions perform = mockMvc.perform(post("/api/v1/order/orders/" + userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestOrderDto))
         );
@@ -92,7 +92,7 @@ public class CommandOrderControllerTest {
                 .thenThrow(new ClientException(ErrorCode.PRODUCT_ID_NOT_EXISTS, "존재하지 않는 ProductId 입니다."));
 
         // when
-        ResultActions perform = mockMvc.perform(post("/api/v1/member/orders/" + userId)
+        ResultActions perform = mockMvc.perform(post("/api/v1/order/orders/" + userId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestOrderDto))
         );
@@ -131,7 +131,7 @@ public class CommandOrderControllerTest {
         when(commandOrderService.createOrder(any(String.class), any(RequestOrderDto.class)))
                 .thenReturn(responseOrderDto);
         // when
-        ResultActions perform = mockMvc.perform(post("/api/v1/member/orders/" + userId)
+        ResultActions perform = mockMvc.perform(post("/api/v1/order/orders/" + userId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestOrderDto))
         );

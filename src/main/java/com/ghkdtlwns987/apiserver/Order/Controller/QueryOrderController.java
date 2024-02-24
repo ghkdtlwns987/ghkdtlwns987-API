@@ -16,7 +16,7 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
 public class QueryOrderController {
     private final QueryOrderService queryOrderService;

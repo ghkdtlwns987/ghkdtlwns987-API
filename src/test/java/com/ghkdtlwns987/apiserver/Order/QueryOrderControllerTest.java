@@ -98,7 +98,7 @@ public class QueryOrderControllerTest {
         when(queryOrderService.getOrderData(userId)).thenReturn(emptyResponses);
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/orders/" + invalidUserId)
+        ResultActions perform = mockMvc.perform(get("/api/v1/order/orders/" + invalidUserId)
                         .contentType(MediaType.APPLICATION_JSON));
 
         // then
@@ -107,7 +107,7 @@ public class QueryOrderControllerTest {
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_ORDER_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ORDER_REQUEST_SUCCESS.getMessage())))
                 .andExpect(jsonPath("$.data", equalTo(emptyResponses)))
-                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/api/v1/member")))
+                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/api/v1/order")))
                 ;
     }
 
@@ -167,7 +167,7 @@ public class QueryOrderControllerTest {
         when(queryOrderService.getOrderData(userId)).thenReturn(responseOrderDtoList);
 
         // when
-        ResultActions perform = mockMvc.perform(get("/api/v1/member/orders/" + userId)
+        ResultActions perform = mockMvc.perform(get("/api/v1/order/orders/" + userId)
                 .contentType(MediaType.APPLICATION_JSON));
 
         perform.andDo(print())
@@ -201,7 +201,7 @@ public class QueryOrderControllerTest {
                 .andExpect(jsonPath("$.data[2].orderId").value(responseOrderDtoList.get(2).getOrderId()))
                 .andExpect(jsonPath("$.data[2].orderedAt", equalTo(currentTime)))
 
-                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/api/v1/member")))
+                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/api/v1/order")))
         ;
     }
 }

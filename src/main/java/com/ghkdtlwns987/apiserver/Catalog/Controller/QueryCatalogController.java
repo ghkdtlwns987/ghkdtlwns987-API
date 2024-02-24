@@ -14,7 +14,7 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1/catalog")
 @RequiredArgsConstructor
 public class QueryCatalogController {
     private final QueryCatalogService queryCatalogService;
@@ -29,7 +29,7 @@ public class QueryCatalogController {
         return entityModel;
     }
 
-    @GetMapping("/catalog/{productName}")
+    @GetMapping("/{productName}")
     public EntityModel<ResultResponse> getCatalogsByProductName(@PathVariable String productName){
         List<ResponseCatalogDto> response = queryCatalogService.getCatalogsByProductName(productName);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.GET_CATALOG_REQUEST_SUCCESS, response);
@@ -39,7 +39,7 @@ public class QueryCatalogController {
         return entityModel;
     }
 
-    @GetMapping("/catalog/Id/{productId}")
+    @GetMapping("/Id/{productId}")
     public EntityModel<ResultResponse> getCatalogsByProductId(@PathVariable String productId) throws ServerException {
         ResponseCatalogDto response = queryCatalogService.getCatalogsByProductId(productId);
         ResultResponse resultResponse = ResultResponse.of(ResultCode.GET_CATALOG_REQUEST_SUCCESS, response);

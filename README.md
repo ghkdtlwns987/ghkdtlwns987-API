@@ -173,6 +173,8 @@
     - 서비스 인프라 도식도 작성
     - 등등...
 
+(2024/02/24)
+
 
 ### 의문점
 Q1. `@DataJpaTest와 직접 Mock객체를 주입받는 방식 vs MockitoAnnotations.openMocks(this) 로 객체를 생성하는 방식?;`
