@@ -1,0 +1,64 @@
+== 회원
+
+[[멤버등록실패_loginId가_7자_이하인_경우]]
+=== 멤버등록실패_loginId가_7자_이하인_경우
+operation::멤버등록실패_loginId가_7자_이하인_경우[snippets='http-request,http-response']
+
+[[멤버등록실패_loginId가_16자_이상인_경우]]
+=== 멤버등록실패_loginId가_16자_이상인_경우
+operation::멤버등록실패_loginId가_16자_이상인_경우[snippets='http-request,http-response']
+
+[[멤버등록실패_password가_8자_이하인경우]]
+=== 멤버등록실패_password가_8자_이하인경우
+operation::멤버등록실패_password가_8자_이하인경우[snippets='http-request,http-response']
+
+[[멤버등록실패_nickname이_1글자인_경우]]
+=== 멤버등록실패_nickname이_1글자인_경우
+operation::멤버등록실패_nickname이_1글자인_경우[snippets='http-request,http-response']
+
+[[멤버등록실패_nickname이_16글자_이상인_경우]]
+=== 멤버등록실패_nickname이_16글자_이상인_경우
+operation::멤버등록실패_nickname이_16글자_이상인_경우[snippets='http-request,http-response']
+
+[[멤버등록실패_phone이_11글자가_아닌_경우]]
+=== 멤버등록실패_phone이_11글자가_아닌_경우
+operation::멤버등록실패_phone이_11글자가_아닌_경우[snippets='http-request,http-response']
+
+[[멤버수정실패_비밀번호가_8자_이하]]
+=== 멤버수정실패_비밀번호가_8자_이하
+operation::멤버수정실패_비밀번호가_8자_이하[snippets='http-request,http-response']
+
+[[멤버수정실패_유효한_nickname이_아님]]
+=== 멤버수정실패_유효한_nickname이_아님
+operation::멤버수정실패_유효한_nickname이_아님[snippets='http-request,http-response']
+
+
+
+
+[[멤버삭제실패_loginId가_존재하지_않음]]
+=== 멤버삭제실패_loginId가_존재하지_않음
+operation::멤버삭제실패_loginId가_존재하지_않음[snippets='http-request,http-response']
+
+[[멤버등록실패_이미_가입된_회원]]
+=== 멤버등록실패_이미_가입된_회원
+operation::멤버등록실패_이미_가입된_회원[snippets='http-request,http-response']
+
+[[멤버수정성공_유효한_nickname]]
+=== 멤버수정성공_유효한_nickname
+operation::멤버수정성공_유효한_nickname[snippets='http-request,http-response']
+
+[[멤버수정성공_유효한_password]]
+=== 멤버수정성공_유효한_password
+operation::멤버수정성공_유효한_password[snippets='http-request,http-response']
+
+[[멤버등록성공]]
+=== 멤버등록성공
+operation::멤버등록성공[snippets='http-request,http-response']
+
+[[멤버삭제성공]]
+=== 멤버삭제성공
+operation::멤버삭제성공[snippets='http-request,http-response']
+
+[[멤버조회성공]]
+=== 멤버조회성공
+operation::멤버조회성공[snippets='http-request,http-response']

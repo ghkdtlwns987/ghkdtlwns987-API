@@ -15,10 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -29,12 +31,15 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CommandMemberController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
 public class CommandMemberControllerTest {
     private final String loginId = "ghkdtlwns987";
     private final String password = "testPassword@12";
@@ -124,7 +129,13 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(
+                document(
+                        "멤버등록실패_loginId가_7자_이하인_경우",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[영문 또는 숫자로 8자 이상 15자 이하만 가능 합니다]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -156,7 +167,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버등록실패_loginId가_16자_이상인_경우",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[영문 또는 숫자로 8자 이상 15자 이하만 가능 합니다]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -186,7 +201,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버등록실패_password가_8자_이하인경우",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[비밀번호는 최소 8자 이상으로 입력해야 합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -217,7 +236,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버등록실패_nickname이_1글자인_경우",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -247,7 +270,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버등록실패_nickname이_16글자_이상인_경우",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -278,7 +305,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버등록실패_phone이_11글자가_아닌_경우",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[휴대폰 번호는 '-'를 제외해 11글자 입력하세요.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -302,7 +333,11 @@ public class CommandMemberControllerTest {
         );
 
         // then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버수정실패_비밀번호가_8자_이하",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[비밀번호는 최소 8자 이상으로 입력해야 합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -327,7 +362,11 @@ public class CommandMemberControllerTest {
         );
 
         // then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버수정실패_유효한_nickname이_아님",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("[숫자, 영어, 한국어와 언더스코어, 공백을 허용하며 최소 2자 이상의 15자 이하의 닉네임만 가능합니다.]")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -348,7 +387,11 @@ public class CommandMemberControllerTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버삭제실패_loginId가_존재하지_않음",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                         .andExpect(jsonPath("$.message", equalTo("존재하지 않는 LoginId 입니다.")))
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -375,7 +418,11 @@ public class CommandMemberControllerTest {
                 .content(objectMapper.writeValueAsString(request))
         );
         // then
-        perform.andDo(print()).andExpect(status().isBadRequest())
+        perform.andDo(document(
+                "멤버등록실패_이미_가입된_회원",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("이미 가입된 Nickname 입니다.")))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -396,7 +443,11 @@ public class CommandMemberControllerTest {
         );
 
         // then
-        perform.andDo(print()).andExpect(status().isOk())
+        perform.andDo(document(
+                "멤버수정성공_유효한_nickname",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo("M001")))
                 .andExpect(jsonPath("$.message", equalTo("회원 NICKNAME 수정 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(member.getLoginId())))
@@ -432,7 +483,11 @@ public class CommandMemberControllerTest {
         );
 
         // then
-        perform.andDo(print()).andExpect(status().isOk())
+        perform.andDo(document(
+                "멤버수정성공_유효한_password",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo("M001")))
                 .andExpect(jsonPath("$.message", equalTo("회원 PASSWORD 수정 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(member.getLoginId())))
@@ -471,7 +526,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isOk())
+        perform.andDo(document(
+                "멤버등록성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo("M001")))
                 .andExpect(jsonPath("$.message", equalTo("회원가입 되었습니다.")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(member.getLoginId())))
@@ -501,7 +560,11 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isOk())
+        perform.andDo(document(
+                "멤버삭제성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                )).andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo("M007")))
                 .andExpect(jsonPath("$.message", equalTo("회원탈퇴 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(memberWithdrawalResponseDto.getLoginId())))
@@ -530,7 +593,12 @@ public class CommandMemberControllerTest {
         );
 
         //then
-        perform.andDo(print()).andExpect(status().isOk())
+        perform.andDo(document(
+                "멤버조회성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                ))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo("M001")))
                 .andExpect(jsonPath("$.message", equalTo("회원 조회 완료")))
                 .andExpect(jsonPath("$.data.loginId", equalTo(memberGetInformationResponseDto.getLoginId())))
