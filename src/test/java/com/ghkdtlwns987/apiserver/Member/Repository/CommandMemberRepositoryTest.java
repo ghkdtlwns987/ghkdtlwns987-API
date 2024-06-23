@@ -1,25 +1,13 @@
 package com.ghkdtlwns987.apiserver.Member.Repository;
 
-
 import com.ghkdtlwns987.apiserver.Member.Entity.Member;
 import com.ghkdtlwns987.apiserver.Member.Entity.Roles;
 import com.ghkdtlwns987.apiserver.Member.Persistent.JpaMemberRepository;
-
-import com.ghkdtlwns987.apiserver.Member.Repository.CommandMemberRepository;
-import com.ghkdtlwns987.apiserver.Member.Service.Impl.QueryMemberServiceImpl;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 public class CommandMemberRepositoryTest {
