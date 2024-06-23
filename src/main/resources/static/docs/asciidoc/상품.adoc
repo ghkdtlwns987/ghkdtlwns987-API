@@ -1,0 +1,32 @@
+== 상품
+[[상품_등록_실패_이미_존재하는_productId]]
+=== 상품_등록_실패_이미_존재하는_productId
+operation::상품_등록_실패_이미_존재하는_productId[snippets='http-request,http-response']
+
+[[상품_등록_성공]]
+=== 상품_등록_성공
+operation::상품_등록_성공[snippets='http-request,http-response']
+
+[[존재하지_않는_productId로_조회]]
+=== 존재하지_않는_productId로_조회
+operation::존재하지_않는_productId로_조회[snippets='http-request,http-response']
+
+[[존재하지_않는_productName으로_조회_빈배열_반환]]
+=== 존재하지_않는_productName으로_조회_빈배열_반환
+operation::존재하지_않는_productName으로_조회_빈배열_반환[snippets='http-request,http-response']
+
+[[전체상품_조회_상품이_존재하지_않는_경우]]
+=== 전체상품_조회_상품이_존재하지_않는_경우
+operation::전체상품_조회_상품이_존재하지_않는_경우[snippets='http-request,http-response']
+
+[[productId로_조회_성공]]
+=== productId로_조회_성공
+operation::productId로_조회_성공[snippets='http-request,http-response']
+
+[[productName으로_조회_성공]]
+=== productName으로_조회_성공
+operation::productName으로_조회_성공[snippets='http-request,http-response']
+
+[[전체_상품_조회]]
+=== 전체_상품_조회
+operation::전체_상품_조회[snippets='http-request,http-response']

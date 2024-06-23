@@ -12,10 +12,12 @@ import com.ghkdtlwns987.apiserver.Order.Service.Inter.CommandOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -24,6 +26,8 @@ import java.time.LocalDateTime;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,6 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CommandOrderController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
+
 public class CommandOrderControllerTest {
     private String orderId = "f932204e-577e-4d17-9101-dd870b7416dd";
     private String userId = "1561d7eb-ab64-48a1-95c8-80d1602bd826i";
@@ -72,7 +78,11 @@ public class CommandOrderControllerTest {
         );
 
         // then
-        perform.andDo(print())
+        perform.andDo(document(
+                "주문생성_실패_재고_부족",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("재고가 모두 소진되었습니다.")));
     }
@@ -93,7 +103,10 @@ public class CommandOrderControllerTest {
         );
 
         // then
-        perform.andDo(print())
+        perform.andDo(document("주문생성_실패_존재하지_않는_productId",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("존재하지 않는 ProductId 입니다.")));
     }
@@ -131,7 +144,10 @@ public class CommandOrderControllerTest {
                 .content(objectMapper.writeValueAsString(requestOrderDto))
         );
         // then
-        perform.andDo(print())
+        perform.andDo(document("주문생성_실패_재고_부족",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CREATE_MEMBER_ORDER_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo("회원 주문이 접수되었습니다.")))

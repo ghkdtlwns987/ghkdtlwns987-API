@@ -10,10 +10,12 @@ import com.ghkdtlwns987.apiserver.Order.Service.Inter.QueryOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -24,7 +26,9 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,6 +36,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(QueryOrderController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
+
 public class QueryOrderControllerTest {
     private String orderId = "f932204e-577e-4d17-9101-dd870b7416dd";
     private String userId = "1561d7eb-ab64-48a1-95c8-80d1602bd826i";
@@ -95,7 +101,11 @@ public class QueryOrderControllerTest {
                         .contentType(MediaType.APPLICATION_JSON));
 
         // then
-        perform.andDo(print())
+        perform.andDo(document(
+                "회원_주문내역_조회_주문하지_않았을경우_빈_배열_반환",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_ORDER_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ORDER_REQUEST_SUCCESS.getMessage())))
@@ -163,7 +173,11 @@ public class QueryOrderControllerTest {
         ResultActions perform = mockMvc.perform(get("/api/v1/order/orders/" + userId)
                 .contentType(MediaType.APPLICATION_JSON));
 
-        perform.andDo(print())
+        perform.andDo(document(
+                "회원_주문내역_조회",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(ResultCode.GET_ORDER_REQUEST_SUCCESS.getCode()))
                 .andExpect(jsonPath("$.message").value(ResultCode.GET_ORDER_REQUEST_SUCCESS.getMessage()))

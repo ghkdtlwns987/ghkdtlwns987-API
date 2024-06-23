@@ -1,0 +1,21 @@
+== 장바구니
+
+[[장바구니_등록_성공]]
+=== 장바구니_등록_성공
+operation::장바구니_등록_성공[snippets='http-request,http-response']
+
+[[장바구니_삭제_성공]]
+=== 장바구니_삭제_성공
+operation::장바구니_삭제_성공[snippets='http-request,http-response']
+
+[[장바구니_수정_성공]]
+=== 장바구니_수정_성공
+operation::장바구니_수정_성공[snippets='http-request,http-response']
+
+[[장바구니_조회_실패_존재하지_않는_key]]
+=== 장바구니_조회_실패_존재하지_않는_key
+operation::장바구니_조회_실패_존재하지_않는_key[snippets='http-request,http-response']
+
+[[장바구니_조회_성공]]
+=== 장바구니_조회_성공
+operation::장바구니_조회_성공[snippets='http-request,http-response']

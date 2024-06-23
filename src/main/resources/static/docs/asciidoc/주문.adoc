@@ -1,0 +1,13 @@
+== 주문
+
+[[주문생성_실패_재고_부족]]
+=== 주문생성_실패_재고_부족
+operation::주문생성_실패_재고_부족[snippets='http-request,http-response']
+
+[[주문생성_실패_존재하지_않는_productId]]
+=== 주문생성_실패_존재하지_않는_productId
+operation::주문생성_실패_존재하지_않는_productId[snippets='http-request,http-response']
+
+[[주문생성_성공]]
+=== 주문생성_성공
+operation::주문생성_성공[snippets='http-request,http-response']

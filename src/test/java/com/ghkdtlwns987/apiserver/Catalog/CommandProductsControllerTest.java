@@ -13,10 +13,12 @@ import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -25,12 +27,15 @@ import java.rmi.ServerException;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CommandCatalogController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
 public class CommandProductsControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -59,7 +64,7 @@ public class CommandProductsControllerTest {
     /**
      * {
      *     "message": "ProductId 가 이미 존재합니다."
-     * }
+     * }품
      */
     @Test
     void 상품_등록_실패_이미_존재하는_productId() throws Exception {
@@ -71,7 +76,11 @@ public class CommandProductsControllerTest {
                 .content(objectMapper.writeValueAsString(requestCatalogDto))
         );
 
-        perform.andDo(print())
+        perform.andDo(document(
+                "상품_등록_실패_이미_존재하는_productId",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo(ErrorCode.PRODUCT_ID_ALREADY_EXISTS.getMessage())));
     }
@@ -103,7 +112,10 @@ public class CommandProductsControllerTest {
                 .content(objectMapper.writeValueAsString(requestCatalogDto))
         );
 
-        perform.andDo(print())
+        perform.andDo(document("상품_등록_성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CREATE_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CREATE_CATALOG_REQUEST_SUCCESS.getMessage())))

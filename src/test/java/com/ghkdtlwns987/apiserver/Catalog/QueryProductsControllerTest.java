@@ -14,6 +14,7 @@ import com.ghkdtlwns987.apiserver.Member.Exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,6 +31,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -38,6 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(QueryCatalogController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
+
 public class QueryProductsControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -90,7 +94,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("존재하지 않는 ProductId 입니다.")));
     }
@@ -118,7 +122,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -134,7 +138,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -166,7 +170,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -210,7 +214,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -231,7 +235,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS.getMessage())))

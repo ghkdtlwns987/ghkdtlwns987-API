@@ -10,10 +10,12 @@ import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -23,12 +25,15 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CommandCartController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
 public class CommandCartControllerTest {
 
     final Duration TTL = Duration.ofMillis(5000);
@@ -96,7 +101,10 @@ public class CommandCartControllerTest {
                 .content(objectMapper.writeValueAsString(cartDto))
         );
 
-        perform.andDo(print())
+        perform.andDo(document("장바구니_등록_성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CART_CREATE_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_CREATE_SUCCESS.getMessage())))
@@ -135,7 +143,10 @@ public class CommandCartControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("장바구니_삭제_성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CART_DELETE_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_DELETE_SUCCESS.getMessage())))
@@ -172,7 +183,10 @@ public class CommandCartControllerTest {
                 .content(objectMapper.writeValueAsString(updateCartDto))
         );
 
-        perform.andDo(print())
+        perform.andDo(document("장바구니_수정_성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CART_UPDATE_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_UPDATE_SUCCESS.getMessage())))

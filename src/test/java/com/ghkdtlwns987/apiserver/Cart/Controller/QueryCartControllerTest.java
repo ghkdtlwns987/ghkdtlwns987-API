@@ -7,10 +7,12 @@ import com.ghkdtlwns987.apiserver.Global.Config.ResultCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -20,6 +22,8 @@ import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(QueryCartController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureRestDocs
 public class QueryCartControllerTest {
     final Duration TTL = Duration.ofMillis(5000);
     private String userId = "7721e64d-c600-4e30-9f22-cdc3262eebde";
@@ -84,7 +89,10 @@ public class QueryCartControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("장바구니_조회_실패_존재하지_않는_key",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                        ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CART_LOAD_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_LOAD_SUCCESS.getMessage())))
@@ -101,7 +109,10 @@ public class QueryCartControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(print())
+        perform.andDo(document("장바구니_조회_성공",
+                        Preprocessors.preprocessRequest(prettyPrint()),
+                        Preprocessors.preprocessResponse(prettyPrint())
+                ))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.CART_LOAD_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.CART_LOAD_SUCCESS.getMessage())))
