@@ -29,14 +29,12 @@ import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(CommandOrderController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
-
 public class CommandOrderControllerTest {
     private String orderId = "f932204e-577e-4d17-9101-dd870b7416dd";
     private String userId = "1561d7eb-ab64-48a1-95c8-80d1602bd826i";
@@ -144,7 +142,7 @@ public class CommandOrderControllerTest {
                 .content(objectMapper.writeValueAsString(requestOrderDto))
         );
         // then
-        perform.andDo(document("주문생성_실패_재고_부족",
+        perform.andDo(document("주문생성_성공",
                         Preprocessors.preprocessRequest(prettyPrint()),
                         Preprocessors.preprocessResponse(prettyPrint())
                         ))

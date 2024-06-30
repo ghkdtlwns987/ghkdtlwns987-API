@@ -110,7 +110,7 @@ public class QueryOrderControllerTest {
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_ORDER_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ORDER_REQUEST_SUCCESS.getMessage())))
                 .andExpect(jsonPath("$.data", equalTo(emptyResponses)))
-                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/api/v1/order")))
+                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost:8080/api/v1/order")))
                 ;
     }
 
@@ -208,7 +208,7 @@ public class QueryOrderControllerTest {
                 .andExpect(jsonPath("$.data[2].orderId").value(responseOrderDtoList.get(2).getOrderId()))
                 .andExpect(jsonPath("$.data[2].orderedAt", equalTo(currentTime)))
 
-                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/api/v1/order")))
+                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost:8080/api/v1/order")))
         ;
     }
 }

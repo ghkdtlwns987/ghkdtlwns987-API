@@ -94,7 +94,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
+        perform.andDo(document("존재하지_않는_productId로_조회"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", equalTo("존재하지 않는 ProductId 입니다.")));
     }
@@ -122,7 +122,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
+        perform.andDo(document("존재하지_않는_productName으로_조회_빈배열_반환"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -170,7 +170,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
+        perform.andDo(document("productId로_조회_성공"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -214,7 +214,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
+        perform.andDo(document("productName으로_조회_성공"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_CATALOG_REQUEST_SUCCESS.getMessage())))
@@ -235,7 +235,7 @@ public class QueryProductsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
-        perform.andDo(document("전체상품_조회_상품이_존재하지_않는_경우"))
+        perform.andDo(document("전체_상품_조회"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code", equalTo(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS.getCode())))
                 .andExpect(jsonPath("$.message", equalTo(ResultCode.GET_ALL_CATALOG_REQUEST_SUCCESS.getMessage())))

@@ -86,7 +86,6 @@ build {
     dependsOn copyDocument
 }
 
-
 // === ⭐ QueryDsl 빌드 옵션 (선택) ===
 def querydslDir = "$buildDir/generated/querydsl"
 
