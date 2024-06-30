@@ -16,6 +16,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -72,13 +73,15 @@ asciidoctor {
 
 bootJar {
     dependsOn asciidoctor
-    from asciidoctor.outputDir
-    into 'static/docs'
+    from("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
 }
 
 task copyDocument(type: Copy) {
     dependsOn asciidoctor
-    from file("${asciidoctor.outputDir}")
+    from file("$buildDir/docs/asciidoc")
+    // from file("${asciidoctor.outputDir}")
     into file("src/main/resources/static/docs")
 }
 
